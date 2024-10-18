@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { BsPencil, BsTrash } from "react-icons/bs";
 import Pagination from '../pagination/Pagination';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify'; // Tambahkan toast di sini
 import 'react-toastify/dist/ReactToastify.css';
 import { AiOutlineSearch } from 'react-icons/ai';
-import ModalAddBarangMasuk from '../modal/add barang masuk/ModalBarangMasuk';
 import ModalEditBarangMasuk from '../modal/edit/ModalEditBarangMasuk';
 import ModalHapusBarangMasuk from '../modal/hapus/ModalHapusBarangMasuk';
 
-const TableProduk = () => {
+const TableStok = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -20,16 +19,10 @@ const TableProduk = () => {
     { id: 1, name: 'Hans Burckcwnenidcnwieger', date: '12-8-2024' , count: 1 , satuan:'pcs', pengirim :'PT Sinar Mas Jaya' , keterangan:'berhasil'},
     { id: 2, name: 'Hans Burcsoncsger', date: '12-8-2024' , count: 1 , satuan:'pcs', pengirim :'PT Sinar Mas Jaya' , keterangan:'berhasil'},
     { id: 3, name: 'Hans Bucosdnodcnnonooorger', date: '12-8-2024' , count: 1 , satuan:'pcs', pengirim :'PT Sinar Mas Jaya' , keterangan:'berhasil'},
-  ];
+   ];
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const currentData = data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-  const [addModalOpen, setAddModalOpen] = useState(false);
-
-  const handleAddProduct = (newProduct) => {
-    console.log('Produk baru telah ditambahkan:', newProduct);
-    toast.success(`${newProduct.name} berhasil ditambahkan!`);
-  };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -46,14 +39,16 @@ const TableProduk = () => {
   };
 
   const handleEditSave = (updatedProduct) => {
+    // Update logika produk di sini
     console.log("Produk telah diperbarui:", updatedProduct);
-    toast.success(`${updatedProduct.name} berhasil diperbarui!`);
+    toast.success(`${updatedProduct.name} berhasil diperbarui!`); 
     setEditModalOpen(false);
   };
 
   const handleDelete = () => {
+    // Hapus logika produk di sini
     console.log("Produk telah dihapus:", selectedProduct);
-    toast.success(`${selectedProduct.name} berhasil dihapus!`);
+    toast.success(`${selectedProduct.name} berhasil dihapus!`); // Tampilkan toast sukses
     setDeleteModalOpen(false);
   };
 
@@ -73,7 +68,7 @@ const TableProduk = () => {
           </div>
         </div>
         <button
-          onClick={() => setAddModalOpen(true)}
+          onClick=''
           className="ml-4 px-4 py-2 bg-green-500 text-zinc-100 font-bold rounded hover:bg-green-600"
         >
           Tambah Produk
@@ -81,17 +76,16 @@ const TableProduk = () => {
 
         <ToastContainer />
       </div>
-
-      <h1 className="text-xl font-bold text-zinc-100 font-serif mb-4">Daftar Barang</h1>
+        <h1 className="text-xl font-bold text-zinc-100 font-serif mb-4">Daftar Barang</h1>
       <table className="min-w-full table-auto ">
         <thead>
           <tr className="bg-zinc-600 text-zinc-100 uppercase text-sm text-center leading-normal">
             <th className="py-2 px-4">No</th>
             <th className="py-2 px-4">Tanggal</th>
+            <th className="py-2 px-4">Lot</th>
             <th className="py-2 px-4">Nama Produk</th>
             <th className="py-2 px-4">Jumlah</th>
             <th className="py-2 px-4">Satuan</th>
-            <th className="py-2 px-4">Pengirim</th>
             <th className="py-2 px-4">Keterangan</th>
             <th className="py-2 px-4">Action</th>
           </tr>
@@ -100,11 +94,12 @@ const TableProduk = () => {
           {currentData.map((item, index) => (
             <tr key={item.id} className="border-b border-zinc-600">
               <td className="py-3 px-6">{(currentPage - 1) * itemsPerPage + index + 1}</td>
+              
               <td className="py-3 px-6">{item.date}</td>
+              <td className="py-3 px-6">{item.count}</td>
               <td className="py-3 px-6">{item.name}</td>
               <td className="py-3 px-6">{item.count}</td>
               <td className="py-3 px-6">{item.satuan}</td>
-              <td className="py-3 px-6">{item.pengirim}</td>
               <td className="py-3 px-6">{item.keterangan}</td>
               <td className="py-3 px-6">
                 <div className="flex items-center justify-center space-x-2">
@@ -137,29 +132,26 @@ const TableProduk = () => {
         itemsPerPage={itemsPerPage}
         onPageChange={handlePageChange}
       />
-      <ModalAddBarangMasuk
-        isOpen={addModalOpen}
-        onClose={() => setAddModalOpen(false)}
-        onAdd={handleAddProduct}
-      />
-      {selectedProduct && (
-        <ModalEditBarangMasuk
-          isOpen={editModalOpen}
-          onClose={() => setEditModalOpen(false)}
-          product={selectedProduct}
-          onSave={handleEditSave}
-        />
-      )}
-      {selectedProduct && (
-        <ModalHapusBarangMasuk
-          isOpen={deleteModalOpen}
-          onClose={() => setDeleteModalOpen(false)}
-          product={selectedProduct}
-          onDelete={handleDelete}
-        />
-      )}
+{selectedProduct && (
+  <ModalEditBarangMasuk
+    isOpen={editModalOpen}
+    onClose={() => setEditModalOpen(false)}
+    product={selectedProduct}
+    onSave={handleEditSave}
+  />
+)}
+
+{selectedProduct && (
+  <ModalHapusBarangMasuk
+    isOpen={deleteModalOpen}
+    onClose={() => setDeleteModalOpen(false)}
+    product={selectedProduct}
+    onDelete={handleDelete}
+  />
+)}
+
     </div>
   );
 };
 
-export default TableProduk;
+export default TableStok;

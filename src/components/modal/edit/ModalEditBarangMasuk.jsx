@@ -1,92 +1,124 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types'; // Import PropTypes
 
-const ModalEditProduk = ({ isOpen, onClose, product, onSave }) => {
-  const [name, setName] = React.useState(product.name);
-  const [imageFile, setImageFile] = React.useState(null); // State to hold the uploaded file
+const ModalEditBarangMasuk = ({ isOpen, onClose, product, onSave }) => {
+  const [updatedProduct, setUpdatedProduct] = useState(product);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    
-    // Create a new FormData object to handle file upload
-    const formData = new FormData();
-    formData.append('name', name);
-    if (imageFile) {
-      formData.append('img', imageFile); // Append the image file
-    }
-    
-    console.log('Saving product:', { ...product, name }); // Log the product details being saved
-    onSave({ ...product, name, img: imageFile }); // Save product with new name and image
-    onClose(); // Close the modal after saving
+  // Gunakan useEffect agar updatedProduct tersinkronisasi saat product berubah
+  useEffect(() => {
+    setUpdatedProduct(product);
+  }, [product]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUpdatedProduct({ ...updatedProduct, [name]: value });
   };
 
-  // Log when the modal opens or closes
-  React.useEffect(() => {
-    if (isOpen) {
-      console.log('Modal opened with product:', product);
-    } else {
-      console.log('Modal closed');
-    }
-  }, [isOpen, product]);
+  const handleSave = () => {
+    onSave(updatedProduct);
+  };
 
-  if (!isOpen) return null;
+  if (!isOpen) return null; // Modal tidak ditampilkan jika isOpen bernilai false
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-zinc-950 bg-opacity-50">
-      <div className="bg-zinc-900 rounded-lg p-4">
-        <h2 className="text-xl font-bold text-zinc-100 mb-4">Edit Produk</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="text-zinc-100 mb-2 font-bold">Nama Produk</label>
+    <div className="fixed inset-0 flex items-center justify-center z-50">
+      <div className="fixed inset-0 bg-zinc-950 opacity-50" onClick={onClose}></div>
+      <div className="bg-zinc-900 rounded-lg p-6 z-50 w-full max-w-lg">
+        <h2 className="text-xl font-bold mb-4 text-zinc-100">Edit Produk</h2>
+        <form className="space-y-4">
+          <div>
+            <label className="block text-base font-medium text-zinc-100">Nama Produk</label>
             <input
               type="text"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-                console.log('Name updated:', e.target.value); // Log the updated name
-              }}
-              className="p-2 w-full bg-zinc-100 rounded"
-              required
+              name="name"
+              value={updatedProduct.name || ''}
+              onChange={handleChange}
+              className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
-          <div className="mb-4">
-            <label className="text-zinc-100 mb-2 font-bold">Upload Foto Produk</label>
+          <div>
+            <label className="block text-base font-medium text-zinc-100">Tanggal</label>
             <input
-              type="file"
-              accept="image/*" // Accepts only image files
-              onChange={(e) => {
-                const file = e.target.files[0];
-                setImageFile(file);
-                console.log('Image file selected:', file); // Log the selected file
-              }}
-              className="p-2 w-full bg-zinc-100 rounded"
-              required
+              type="date"
+              name="date"
+              value={updatedProduct.date || ''}
+              onChange={handleChange}
+              className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
-          <div className="btn-action flex justify-end items-center">
-          <button type="submit" className="font-bold bg-green-600 text-zinc-100 py-2 px-4 rounded">
-            Simpan
-          </button>
-          <button type="button" onClick={onClose} className="font-bold bg-zinc-600 text-zinc-100 ml-2 py-2 px-4 rounded">
-            Batal
-          </button>
+          <div>
+            <label className="block text-base font-medium text-zinc-100">Jumlah</label>
+            <input
+              type="number"
+              name="count"
+              value={updatedProduct.count || ''}
+              onChange={handleChange}
+              className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+          <div>
+            <label className="block text-base font-medium text-zinc-100">Satuan</label>
+            <input
+              type="text"
+              name="satuan"
+              value={updatedProduct.satuan || ''}
+              onChange={handleChange}
+              className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+          <div>
+            <label className="block text-base font-medium text-zinc-100">Pengirim</label>
+            <input
+              type="text"
+              name="keterangan"
+              value={updatedProduct.pengirim || ''}
+              onChange={handleChange}
+              className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+          <div>
+            <label className="block text-base font-medium text-zinc-100">Keterangan</label>
+            <input
+              type="text"
+              name="keterangan"
+              value={updatedProduct.keterangan || ''}
+              onChange={handleChange}
+              className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
           </div>
         </form>
+        <div className="mt-6 flex justify-end">
+          <button
+            onClick={onClose}
+            className="font-bold mr-2 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+          >
+            Batal
+          </button>
+          <button
+            onClick={handleSave}
+            className="font-bold px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Simpan
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
-// Add prop types validation
-ModalEditProduk.propTypes = {
-  isOpen: PropTypes.bool.isRequired,   // isOpen should be a boolean and is required
-  onClose: PropTypes.func.isRequired,   // onClose should be a function and is required
-  product: PropTypes.shape({
-    id: PropTypes.number.isRequired,     // product.id should be a number and is required
-    name: PropTypes.string.isRequired,   // product.name should be a string and is required
-    img: PropTypes.string,                // product.img can be a string but is optional
-  }).isRequired,                         // product should be an object and is required
-  onSave: PropTypes.func.isRequired,    // onSave should be a function and is required
+// Menambahkan PropTypes untuk validasi
+ModalEditBarangMasuk.propTypes = {
+  isOpen: PropTypes.bool.isRequired,     // isOpen harus berupa boolean dan wajib diisi
+  onClose: PropTypes.func.isRequired,    // onClose harus berupa fungsi dan wajib diisi
+  product: PropTypes.shape({             // product harus berupa objek dengan struktur yang ditentukan
+    name: PropTypes.string,
+    date: PropTypes.string,
+    count: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    satuan: PropTypes.string,
+    pengirim: PropTypes.string,
+    keterangan: PropTypes.string,
+  }).isRequired,
+  onSave: PropTypes.func.isRequired,     // onSave harus berupa fungsi dan wajib diisi
 };
 
-export default ModalEditProduk;
+export default ModalEditBarangMasuk;

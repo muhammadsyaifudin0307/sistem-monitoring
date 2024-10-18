@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { BsPencil, BsTrash } from "react-icons/bs";
 import Pagination from '../pagination/Pagination';
-import AddProduk from '../button/AddProduk';
 import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css'; 
 import ModalEditProduk from '../modal/edit/ModalEditProduk';
@@ -64,7 +63,12 @@ const TableProduk = () => {
       <div className="flex items-center justify-between mb-5">
         <h1 className="text-xl font-bold text-zinc-100 font-serif">Daftar Produk</h1>
         <ToastContainer />
-        <AddProduk onClick={() => setAddModalOpen(true)} />
+        <button
+        onClick={() => setAddModalOpen(true)}
+        className="mb-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 font-bold"
+      >
+        Tambah Produk
+      </button>
       </div>
       
       <table className="min-w-full table-auto ">

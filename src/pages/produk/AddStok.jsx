@@ -1,4 +1,5 @@
 import CardStokSecond from "../../components/card/CardStokSecond";
+import TableStok from "../../components/table/TableStok";
 
 const AddStok = () => {
   return (
@@ -10,6 +11,7 @@ const AddStok = () => {
         <div className="total-stok w-1/6"><CardStokSecond /></div>
         </div>
       <div className="bg-zinc-900 rounded-lg">
+        <TableStok />
       </div>
       
     </main>
