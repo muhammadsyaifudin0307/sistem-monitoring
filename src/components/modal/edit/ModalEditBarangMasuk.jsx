@@ -228,7 +228,7 @@ const ModalEditBarangMasuk = ({ isOpen, onClose, product, onSave }) => {
               Grade
             </label>
             <input
-              type="number"
+              type="text"
               name="grade"
               value={updatedProduct.grade || ""}
               onChange={handleChange}

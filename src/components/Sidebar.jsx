@@ -230,18 +230,6 @@ const Sidebar = () => {
                     <Link
                       to="/rekap"
                       className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
-                        location.pathname === "/lab/rekap"
-                          ? "rounded-md bg-zinc-600"
-                          : ""
-                      }`}>
-                      <BsFileEarmarkText className="text-2xl text-zinc-100" />
-                      <span className="ml-2">Rekap</span>
-                    </Link>
-                  </li>
-                  <li className="mb-1">
-                    <Link
-                      to="/rekap"
-                      className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
                         location.pathname === "/rekap"
                           ? "rounded-md bg-zinc-600"
                           : ""

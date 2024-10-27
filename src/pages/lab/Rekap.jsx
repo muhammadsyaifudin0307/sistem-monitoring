@@ -1,3 +1,5 @@
+import TableLab from "../../components/table/TableLab";
+
 const Rekap = () => {
   return (
     <main className="p-4">
@@ -6,7 +8,9 @@ const Rekap = () => {
           Rekap Lab Bulanan
         </div>
       </div>
-      <div className="bg-zinc-900 text-white rounded-lg"></div>
+      <div className="p-4 bg-zinc-900 rounded-lg">
+        <TableLab />
+      </div>
       <div className=""></div>
     </main>
   );

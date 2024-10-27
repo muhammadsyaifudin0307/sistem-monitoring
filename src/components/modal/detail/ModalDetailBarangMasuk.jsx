@@ -11,7 +11,6 @@ const ModalDetailBarangMasuk = ({ isOpen, onClose, product }) => {
         className="fixed inset-0 bg-zinc-950 opacity-50"
         onClick={onClose}></div>
       <div className=" bg-zinc-900 rounded-lg p-6 w-full max-w-4xl max-h-[90vh] z-50">
-        {/* Header Modal */}
         <div className="flex items-center justify-between mb-4 text-zinc-100">
           <div className="flex items-center gap-2">
             <BsGrid className="text-2xl" />
@@ -23,7 +22,6 @@ const ModalDetailBarangMasuk = ({ isOpen, onClose, product }) => {
           </div>
         </div>
 
-        {/* Konten Modal */}
         <div className="border border-zinc-100 rounded-lg p-4 text-zinc-100">
           <div className="grid grid-cols-4 gap-4">
             {[
@@ -36,11 +34,11 @@ const ModalDetailBarangMasuk = ({ isOpen, onClose, product }) => {
               { label: "Berat (gr)", value: product.gr },
               { label: "Ukuran (cm)", value: product.cm },
               { label: "JS40", value: product.js40 },
-              { label: "Kandungan Impurities", value: product.impurity },
-              { label: "Kandungan Kotoran", value: product.filth },
+              { label: "Impurity", value: product.impurity },
+              { label: "Filth", value: product.filth },
               { label: "Temperatur (°C)", value: product.temp },
               { label: "pH", value: product.ph },
-              { label: "Kandungan Air", value: product.moisture },
+              { label: "Moisture", value: product.moisture },
               { label: "Kecerahan", value: product.whitness },
               { label: "Grade", value: product.grade },
             ].map((item, index) => (
@@ -52,7 +50,6 @@ const ModalDetailBarangMasuk = ({ isOpen, onClose, product }) => {
           </div>
         </div>
 
-        {/* Tombol Tutup */}
         <button
           onClick={onClose}
           className="mt-4 px-4 py-2 bg-red-500 text-white font-bold rounded">
@@ -63,7 +60,6 @@ const ModalDetailBarangMasuk = ({ isOpen, onClose, product }) => {
   );
 };
 
-// PropTypes validation
 ModalDetailBarangMasuk.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
