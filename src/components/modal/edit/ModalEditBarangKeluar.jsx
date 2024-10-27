@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
-import PropTypes from "prop-types"; // Import PropTypes
+import PropTypes from "prop-types";
 
-const ModalEditBarangMasuk = ({ isOpen, onClose, product, onSave }) => {
-  const [updatedProduct, setUpdatedProduct] = useState(product);
+const ModalEditBarangKeluar = ({ isOpen, onClose, product = {}, onSave }) => {
+  const [updatedProduct, setUpdatedProduct] = useState(product || {});
 
-  // Gunakan useEffect agar updatedProduct tersinkronisasi saat product berubah
   useEffect(() => {
-    setUpdatedProduct(product);
+    if (product) {
+      setUpdatedProduct(product);
+    }
   }, [product]);
 
   const handleChange = (e) => {
@@ -18,7 +19,7 @@ const ModalEditBarangMasuk = ({ isOpen, onClose, product, onSave }) => {
     onSave(updatedProduct);
   };
 
-  if (!isOpen) return null; // Modal tidak ditampilkan jika isOpen bernilai false
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 overflow-hidden">
@@ -26,11 +27,13 @@ const ModalEditBarangMasuk = ({ isOpen, onClose, product, onSave }) => {
         className="fixed inset-0 bg-zinc-950 opacity-50"
         onClick={onClose}></div>
       <div className="hide-scrollbar bg-zinc-900 rounded-lg p-6 z-50 w-full max-w-4xl max-h-[90vh] overflow-y-auto ">
-        <h2 className="text-xl font-bold mb-4 text-zinc-100">Edit Produk</h2>
+        <h2 className="text-xl font-bold mb-4 text-zinc-100">
+          Edit Barang Keluar
+        </h2>
         <form className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
             <label className="block text-base font-medium text-zinc-100">
-              Nama Produk
+              Nama Barang Keluar
             </label>
             <select
               name="name"
@@ -38,9 +41,9 @@ const ModalEditBarangMasuk = ({ isOpen, onClose, product, onSave }) => {
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500">
               <option value="" disabled>
-                Pilih Produk
+                Pilih Barang
               </option>
-              <option value="Produk A"></option>
+              <option value="Produk A">Produk A</option>
             </select>
           </div>
           <div>
@@ -111,6 +114,18 @@ const ModalEditBarangMasuk = ({ isOpen, onClose, product, onSave }) => {
               type="text"
               name="keterangan"
               value={updatedProduct.keterangan || ""}
+              onChange={handleChange}
+              className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+          <div>
+            <label className="block text-base font-medium text-zinc-100">
+              Tujuan
+            </label>
+            <input
+              type="text"
+              name="tujuan"
+              value={updatedProduct.tujuan || ""}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -228,7 +243,7 @@ const ModalEditBarangMasuk = ({ isOpen, onClose, product, onSave }) => {
               Grade
             </label>
             <input
-              type="number"
+              type="text"
               name="grade"
               value={updatedProduct.grade || ""}
               onChange={handleChange}
@@ -254,11 +269,11 @@ const ModalEditBarangMasuk = ({ isOpen, onClose, product, onSave }) => {
 };
 
 // Validasi PropTypes
-ModalEditBarangMasuk.propTypes = {
+ModalEditBarangKeluar.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  product: PropTypes.object.isRequired,
+  product: PropTypes.object,
   onSave: PropTypes.func.isRequired,
 };
 
-export default ModalEditBarangMasuk;
+export default ModalEditBarangKeluar;

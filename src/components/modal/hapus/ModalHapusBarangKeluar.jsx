@@ -1,7 +1,7 @@
-import PropTypes from "prop-types"; // Import PropTypes
+import PropTypes from "prop-types";
 
-const ModalHapusBarangMasuk = ({ isOpen, onClose, product, onDelete }) => {
-  if (!isOpen) return null; // Modal tidak akan ditampilkan jika isOpen bernilai false
+const ModalHapusBarangKeluar = ({ isOpen, onClose, product, onDelete }) => {
+  if (!isOpen || !product) return null; // Pastikan modal hanya dirender jika isOpen true dan product tersedia
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -10,11 +10,10 @@ const ModalHapusBarangMasuk = ({ isOpen, onClose, product, onDelete }) => {
         onClick={onClose}></div>
       <div className="bg-zinc-900 rounded-lg p-6 z-50 w-full max-w-lg">
         <h2 className="text-lg font-bold mb-4 text-zinc-100">
-          Hapus Barang Masuk
+          Hapus Barang Keluar
         </h2>
         <p className="mb-4 text-zinc-100">
-          Apakah Anda yakin ingin menghapus produk
-          <strong>{product.name}</strong>?
+          Apakah Anda yakin ingin menghapus <strong>{product?.name}</strong>?
         </p>
         <div className="flex justify-end">
           <button
@@ -33,15 +32,13 @@ const ModalHapusBarangMasuk = ({ isOpen, onClose, product, onDelete }) => {
   );
 };
 
-// Menambahkan PropTypes untuk validasi
-ModalHapusBarangMasuk.propTypes = {
-  isOpen: PropTypes.bool.isRequired, // isOpen harus berupa boolean dan wajib diisi
-  onClose: PropTypes.func.isRequired, // onClose harus berupa fungsi dan wajib diisi
+ModalHapusBarangKeluar.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
   product: PropTypes.shape({
-    // product harus berupa objek dengan struktur yang ditentukan
-    name: PropTypes.string.isRequired,
-  }).isRequired,
-  onDelete: PropTypes.func.isRequired, // onDelete harus berupa fungsi dan wajib diisi
+    name: PropTypes.string,
+  }),
+  onDelete: PropTypes.func.isRequired,
 };
 
-export default ModalHapusBarangMasuk;
+export default ModalHapusBarangKeluar;

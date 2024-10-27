@@ -1,33 +1,32 @@
-import { useState } from 'react';
-import { AiOutlineUser } from 'react-icons/ai';  
-import { FiLock } from 'react-icons/fi';    
-import { toast } from 'react-toastify';
-import PropTypes from 'prop-types';
-import { AxiosInstace } from '../../libs/axios';
+import { useState } from "react";
+import { AiOutlineUser } from "react-icons/ai";
+import { FiLock } from "react-icons/fi";
+import { toast } from "react-toastify";
+import PropTypes from "prop-types";
+import { AxiosInstace } from "../../libs/axios";
 const Login = ({ onLogin }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await AxiosInstace.post('/Login', {
+      const response = await AxiosInstace.post("/Login", {
         username,
         password,
-      
       });
 
-      console.log(response)
-      localStorage.setItem('token', response.data.token); // Simpan token
+      console.log(response);
+      localStorage.setItem("token", response.data.token); // Simpan token
 
-      if (typeof onLogin === 'function') {
+      if (typeof onLogin === "function") {
         onLogin(); // Panggil fungsi login dari props untuk mengubah status login
       } else {
-        console.error('onLogin prop is not a function');
+        console.error("onLogin prop is not a function");
       }
 
-      toast.success('Login berhasil!', {
+      toast.success("Login berhasil!", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -35,11 +34,11 @@ const Login = ({ onLogin }) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        className: 'bg-zinc-900 text-white',
-        bodyClassName: 'flex items-center',
+        className: "bg-zinc-900 text-white",
+        bodyClassName: "flex items-center",
       });
     } catch (error) {
-      toast.error('Username atau password salah.', {
+      toast.error("Username atau password salah.", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -47,17 +46,22 @@ const Login = ({ onLogin }) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        className: 'bg-zinc-900 text-zinc-100',
-        bodyClassName: 'flex items-center',
+        className: "bg-zinc-900 text-zinc-100",
+        bodyClassName: "flex items-center",
       });
-      console.error('Login failed:', error.response ? error.response.data : error.message);
+      console.error(
+        "Login failed:",
+        error.response ? error.response.data : error.message
+      );
     }
   };
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-900">
       <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-sm">
-        <h2 className="text-2xl text-white font-semibold text-center mb-6">Login</h2>
+        <h2 className="text-2xl text-white font-semibold text-center mb-6">
+          Login
+        </h2>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -94,8 +98,7 @@ const Login = ({ onLogin }) => {
 
           <button
             type="submit"
-            className="w-full py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 transition duration-300"
-          >
+            className="w-full py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 transition duration-300">
             Login
           </button>
         </form>
@@ -106,7 +109,7 @@ const Login = ({ onLogin }) => {
 
 // PropTypes validation
 Login.propTypes = {
-  onLogin: PropTypes.func.isRequired,  // Ensure onLogin is a required function
+  onLogin: PropTypes.func.isRequired, // Ensure onLogin is a required function
 };
 
 export default Login;

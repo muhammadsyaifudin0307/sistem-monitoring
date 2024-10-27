@@ -1,101 +1,201 @@
-import { Link, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
 import { CiInboxIn, CiInboxOut, CiBoxes } from "react-icons/ci";
-import { FaBars} from 'react-icons/fa';
-import { BsBoxSeam,BsInboxes } from "react-icons/bs";
-
+import { FaBars } from "react-icons/fa";
+import { BsBoxSeam } from "react-icons/bs";
 import { IoHomeOutline } from "react-icons/io5";
-import { MdRecycling } from "react-icons/md";
 import { LiaFlaskSolid } from "react-icons/lia";
+import { BsFileEarmarkText } from "react-icons/bs";
 
 const Sidebar = () => {
   const location = useLocation();
-  const [isProductOpen, setIsProductOpen] = useState(false); 
-  const [isProsesOpen, setIsProsesOpen] = useState(false); 
-  const [isLabOpen, setIsLabOpen] = useState(false); 
-  const [isCollapsed, setIsCollapsed] = useState(false); 
+  const [isProductOpen, setIsProductOpen] = useState(false);
+  const [isHasilLabOpen, setIsHasilLabOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  // Close "Product" and "Hasil Lab" pop-ups when location pathname changes
+  useEffect(() => {
+    setIsProductOpen(false);
+    setIsHasilLabOpen(false);
+  }, [location]);
+
+  // Handle submenu toggle
+  const handleProductToggle = () => {
+    setIsProductOpen(!isProductOpen);
+    setIsHasilLabOpen(false); // Close Hasil Lab submenu when Product is opened
+  };
+
+  const handleHasilLabToggle = () => {
+    setIsHasilLabOpen(!isHasilLabOpen);
+    setIsProductOpen(false); // Close Product submenu when Hasil Lab is opened
+  };
 
   return (
-    <aside className={`bg-zinc-900 p-4 transition-all duration-300 h-full max-h-screen ${isCollapsed ? 'w-20' : 'w-64'} overflow-y-auto custom-scrollbar`}>
-
+    <aside
+      className={`bg-zinc-900 p-4 h-full max-h-screen transition-all duration-700 ease-in-out ${
+        isCollapsed ? "w-20" : "w-64"
+      } overflow-y-auto custom-scrollbar`}>
       <div className="flex justify-between mb-4">
         {!isCollapsed && (
-          <h1 className={`text-zinc-100 text-center text-2xl font-bold transition-opacity duration-300 ${isCollapsed ? 'opacity-0' : 'opacity-100'}`}>
+          <h1
+            className={`text-zinc-100 text-center text-2xl font-bold transition-opacity duration-500 ease-in-out ${
+              isCollapsed ? "opacity-0" : "opacity-100"
+            }`}>
             SIM
           </h1>
         )}
         <button
-          className={`text-xl ${isCollapsed ? 'w-full h-full flex items-center justify-center mt-2 text-2xl' : 'ml-auto'}`}
-          onClick={() => setIsCollapsed(!isCollapsed)}
-        >
-          <FaBars className='text-zinc-100 ' />
+          className={`text-xl transition-all duration-700 ease-in-out ${
+            isCollapsed
+              ? "w-full h-full flex items-center justify-center mt-2 text-2xl"
+              : "ml-auto"
+          }`}
+          onClick={() => setIsCollapsed(!isCollapsed)}>
+          <FaBars className="text-zinc-100 " />
         </button>
       </div>
-      <nav className='mt-11'>
+      <nav className="mt-11">
         <ul>
           <li className="mb-2">
             <Link
               to="/"
-              className={`flex items-center p-2 ${location.pathname === '/' ? 'rounded-md bg-zinc-600' : ''} ${isCollapsed ? 'justify-center' : 'justify-start'}`}
-            >
-              <IoHomeOutline className='text-2xl text-zinc-100 ' />
-              {!isCollapsed && <span className="ml-2 text-zinc-100 font-bold">Dashboard</span>}
+              className={`flex items-center p-2 transition-all duration-500 ease-in-out ${
+                location.pathname === "/" ? "rounded-md bg-zinc-600" : ""
+              } ${isCollapsed ? "justify-center" : "justify-start"}`}>
+              <IoHomeOutline className="text-2xl text-zinc-100 transform transition-transform duration-500 ease-in-out" />
+              {!isCollapsed && (
+                <span className="ml-2 text-zinc-100 font-bold">Dashboard</span>
+              )}
             </Link>
           </li>
           <li className="mb-2">
             <span
-              className={`flex items-center p-2 font-semibold cursor-pointer ${isCollapsed ? 'justify-center' : 'justify-start'}`}
-              onClick={() => setIsProductOpen(!isProductOpen)}
-            >
-              <BsBoxSeam className='text-2xl text-zinc-100 '/>
-              {!isCollapsed && <span className="ml-2 text-zinc-100 font-bold text-base">Product</span>}
+              className={`flex items-center p-2 font-semibold cursor-pointer transition-all duration-500 ease-in-out ${
+                isCollapsed ? "justify-center" : "justify-start"
+              }`}
+              onClick={handleProductToggle}>
+              <BsBoxSeam className="text-2xl text-zinc-100 transform transition-transform duration-500 ease-in-out" />
+              {!isCollapsed && (
+                <span className="ml-2 text-zinc-100 font-bold text-base">
+                  Product
+                </span>
+              )}
             </span>
-            {isProductOpen && (
-              <ul className={`ml-4 ${isCollapsed ? 'ml-0' : 'ml-6'}`}>
+            {isCollapsed && isProductOpen && (
+              <div
+                style={{
+                  position: "absolute",
+                  left: "5.5rem",
+                  top: "6.7rem",
+                  marginTop: "2rem",
+                  backgroundColor: "#18181b",
+                  borderRadius: "0.375rem",
+                  padding: "0.5rem",
+                  zIndex: 50,
+                  width: "10rem",
+                  transition: "all 0.5s ease-in-out",
+                }}>
+                <ul>
+                  <li className="mb-1">
+                    <Link
+                      to="/add-product"
+                      className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
+                        location.pathname === "/add-product"
+                          ? "rounded-md bg-zinc-600"
+                          : ""
+                      }`}>
+                      <CiBoxes className="text-2xl text-zinc-100" />
+                      <span className="ml-2">Add Product</span>
+                    </Link>
+                  </li>
+                  <li className="mb-1">
+                    <Link
+                      to="/incoming"
+                      className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
+                        location.pathname === "/incoming"
+                          ? "rounded-md bg-zinc-600"
+                          : ""
+                      }`}>
+                      <CiInboxIn className="text-2xl text-zinc-100" />
+                      <span className="ml-2">Incoming</span>
+                    </Link>
+                  </li>
+                  <li className="mb-1">
+                    <Link
+                      to="/outgoing"
+                      className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
+                        location.pathname === "/outgoing"
+                          ? "rounded-md bg-zinc-600"
+                          : ""
+                      }`}>
+                      <CiInboxOut className="text-2xl text-zinc-100" />
+                      <span className="ml-2">Outgoing</span>
+                    </Link>
+                  </li>
+                  <li className="mb-1">
+                    <Link
+                      to="/rejecting"
+                      className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
+                        location.pathname === "/rejecting"
+                          ? "rounded-md bg-zinc-600"
+                          : ""
+                      }`}>
+                      <HiOutlineArchiveBoxXMark className="text-2xl text-zinc-100" />
+                      <span className="ml-2">Rejecting</span>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            )}
+            {!isCollapsed && isProductOpen && (
+              <ul className={`ml-4 ${isCollapsed ? "ml-0" : "ml-6"}`}>
                 <li className="mb-1">
                   <Link
                     to="/add-product"
-                    className={`flex items-center p-2 text-zinc-100 dark:text-gray-300 ${location.pathname === '/add-product' ? 'rounded-md bg-zinc-600' : ''} ${isCollapsed ? 'justify-center' : 'justify-start'}`}
-                  >
-                    <CiBoxes className='text-2xl text-zinc-100' />
-                    {!isCollapsed && <span className="ml-2">Add Product</span>}
-                  </Link>
-                </li>
-                <li className="mb-1">
-                  <Link
-                    to="/add-stok"
-                    className={`flex items-center p-2 text-zinc-100 dark:text-gray-300 ${location.pathname === '/add-stok' ? 'rounded-md bg-zinc-600' : ''} ${isCollapsed ? 'justify-center' : 'justify-start'}`}
-                  >
-                    <BsInboxes className='text-xl text-zinc-100' />
-                    {!isCollapsed && <span className="ml-2">Add Stok</span>}
+                    className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
+                      location.pathname === "/add-product"
+                        ? "rounded-md bg-zinc-600"
+                        : ""
+                    }`}>
+                    <CiBoxes className="text-2xl text-zinc-100" />
+                    <span className="ml-2">Add Product</span>
                   </Link>
                 </li>
                 <li className="mb-1">
                   <Link
                     to="/incoming"
-                    className={`flex items-center p-2 text-zinc-100 dark:text-gray-300 ${location.pathname === '/incoming' ? 'rounded-md bg-zinc-600' : ''} ${isCollapsed ? 'justify-center' : 'justify-start'}`}
-                  >
-                    <CiInboxIn className='text-2xl text-zinc-100'/>
-                    {!isCollapsed && <span className="ml-2">Incoming</span>}
+                    className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
+                      location.pathname === "/incoming"
+                        ? "rounded-md bg-zinc-600"
+                        : ""
+                    }`}>
+                    <CiInboxIn className="text-2xl text-zinc-100" />
+                    <span className="ml-2">Incoming</span>
                   </Link>
                 </li>
                 <li className="mb-1">
                   <Link
                     to="/outgoing"
-                    className={`flex items-center p-2 text-zinc-100 dark:text-gray-300 ${location.pathname === '/outgoing' ? 'rounded-md bg-zinc-600' : ''} ${isCollapsed ? 'justify-center' : 'justify-start'}`}
-                  >
-                    <CiInboxOut className='text-2xl text-zinc-100'/>
-                    {!isCollapsed && <span className="ml-2">Outgoing</span>}
+                    className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
+                      location.pathname === "/outgoing"
+                        ? "rounded-md bg-zinc-600"
+                        : ""
+                    }`}>
+                    <CiInboxOut className="text-2xl text-zinc-100" />
+                    <span className="ml-2">Outgoing</span>
                   </Link>
                 </li>
                 <li className="mb-1">
                   <Link
                     to="/rejecting"
-                    className={`flex items-center p-2 text-zinc-100 dark:text-gray-300 ${location.pathname === '/rejecting' ? 'rounded-md bg-zinc-600' : ''} ${isCollapsed ? 'justify-center' : 'justify-start'}`}
-                  >
-                    <HiOutlineArchiveBoxXMark className='text-2xl text-zinc-100'/>
-                    {!isCollapsed && <span className="ml-2">Rejecting</span>}
+                    className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
+                      location.pathname === "/rejecting"
+                        ? "rounded-md bg-zinc-600"
+                        : ""
+                    }`}>
+                    <HiOutlineArchiveBoxXMark className="text-2xl text-zinc-100" />
+                    <span className="ml-2">Rejecting</span>
                   </Link>
                 </li>
               </ul>
@@ -103,51 +203,86 @@ const Sidebar = () => {
           </li>
           <li className="mb-2">
             <span
-              className={`flex items-center p-2 font-semibold cursor-pointer ${isCollapsed ? 'justify-center' : 'justify-start'}`}
-              onClick={() => setIsProsesOpen(!isProsesOpen)}
-            >
-              <MdRecycling className='text-2xl text-zinc-100 '/>
-              {!isCollapsed && <span className="ml-2 text-zinc-100 font-bold text-base">Proses</span>}
+              className={`flex items-center p-2 font-semibold cursor-pointer transition-all duration-500 ease-in-out ${
+                isCollapsed ? "justify-center" : "justify-start"
+              }`}
+              onClick={handleHasilLabToggle}>
+              <LiaFlaskSolid className="text-2xl text-zinc-100 transform transition-transform duration-500 ease-in-out" />
+              {!isCollapsed && (
+                <span className="ml-2 text-zinc-100 font-bold">Hasil Lab</span>
+              )}
             </span>
-            {isProsesOpen && (
-              <ul className={`ml-4 ${isCollapsed ? 'ml-0' : 'ml-6'}`}>
-                
+            {isCollapsed && isHasilLabOpen && (
+              <div
+                style={{
+                  position: "absolute",
+                  left: "5.5rem",
+                  top: "12.8rem",
+                  backgroundColor: "#18181b",
+                  borderRadius: "0.375rem",
+                  padding: "0.5rem",
+                  zIndex: 50,
+                  width: "10rem",
+                  transition: "all 0.5s ease-in-out",
+                }}>
+                <ul>
+                  <li className="mb-1">
+                    <Link
+                      to="/rekap"
+                      className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
+                        location.pathname === "/lab/rekap"
+                          ? "rounded-md bg-zinc-600"
+                          : ""
+                      }`}>
+                      <BsFileEarmarkText className="text-2xl text-zinc-100" />
+                      <span className="ml-2">Rekap</span>
+                    </Link>
+                  </li>
+                  <li className="mb-1">
+                    <Link
+                      to="/rekap"
+                      className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
+                        location.pathname === "/rekap"
+                          ? "rounded-md bg-zinc-600"
+                          : ""
+                      }`}>
+                      <BsFileEarmarkText className="text-2xl text-zinc-100" />
+                      <span className="ml-2">Rekap</span>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            )}
+            {!isCollapsed && isHasilLabOpen && (
+              <ul className="ml-4">
                 <li className="mb-1">
                   <Link
-                    to="/rejecting"
-                    className={`flex items-center p-2 text-zinc-100 dark:text-gray-300 ${location.pathname === '/rejecting' ? 'rounded-md bg-zinc-600' : ''} ${isCollapsed ? 'justify-center' : 'justify-start'}`}
-                  >
-                    <HiOutlineArchiveBoxXMark className='text-2xl text-zinc-100'/>
-                    {!isCollapsed && <span className="ml-2">Rejecting</span>}
+                    to="/rekap"
+                    className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
+                      location.pathname === "/rekap"
+                        ? "rounded-md bg-zinc-600"
+                        : ""
+                    }`}>
+                    <BsFileEarmarkText className="text-2xl text-zinc-100" />
+                    <span className="ml-2">Rekap</span>
+                  </Link>
+                </li>
+
+                <li className="mb-1">
+                  <Link
+                    to="/hasil-lab/rekap"
+                    className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
+                      location.pathname === "/hasil-lab/rekap"
+                        ? "rounded-md bg-zinc-600"
+                        : ""
+                    }`}>
+                    <span className="ml-2">Detail</span>
                   </Link>
                 </li>
               </ul>
             )}
           </li>
-          <li className="mb-2">
-            <span
-              className={`flex items-center p-2 font-semibold cursor-pointer ${isCollapsed ? 'justify-center' : 'justify-start'}`}
-              onClick={() => setIsLabOpen(!isLabOpen)}
-            >
-              <LiaFlaskSolid className='text-2xl text-zinc-100 '/>
-              {!isCollapsed && <span className="ml-2 text-zinc-100 font-bold text-base">Lab</span>}
-            </span>
-            {isLabOpen && (
-              <ul className={`ml-4 ${isCollapsed ? 'ml-0' : 'ml-6'}`}>
-                <li className="mb-1">
-                  <Link
-                    to="/add-product"
-                    className={`flex items-center p-2 text-zinc-100 dark:text-gray-300 ${location.pathname === '/add-product' ? 'rounded-md bg-zinc-600' : ''} ${isCollapsed ? 'justify-center' : 'justify-start'}`}
-                  >
-                    <CiBoxes className='text-2xl text-zinc-100' />
-                    {!isCollapsed && <span className="ml-2">Add Product</span>}
-                  </Link>
-                </li>
-                
-              </ul>
-            )}
-          </li>
-          
+          {/* Add additional menu items if needed */}
         </ul>
       </nav>
     </aside>
