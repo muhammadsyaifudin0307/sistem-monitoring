@@ -69,7 +69,18 @@ const ModalEditLab = ({ isOpen, onClose, product = {}, onSave }) => {
               <option value="Produk 3">Produk 3</option>
             </select>
           </div>
-
+          <div>
+            <label className="block text-sm font-medium text-zinc-100">
+              Tanggal
+            </label>
+            <input
+              type="date"
+              name="tanggal"
+              value={updatedProduct.tanggal || ""}
+              onChange={handleChange}
+              className="mt-1 p-3 w-full border border-zinc-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
           <div>
             <label className="block text-sm font-medium text-zinc-100">
               Gr
@@ -79,6 +90,152 @@ const ModalEditLab = ({ isOpen, onClose, product = {}, onSave }) => {
               name="gr"
               onChange={handleChange}
               value={updatedProduct.gr || ""}
+              className="mt-1 p-3 w-full border border-zinc-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-zinc-100">
+              Cm
+            </label>
+            <input
+              type="number"
+              name="cm"
+              onChange={handleChange}
+              value={updatedProduct.cm || ""}
+              className="mt-1 p-3 w-full border border-zinc-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-zinc-100">
+              0`
+            </label>
+            <input
+              type="number"
+              name="nol"
+              onChange={handleChange}
+              value={updatedProduct.nol || ""}
+              readOnly
+              className="mt-1 p-3 w-full border border-zinc-700 rounded-md shadow-sm focus:outline-none"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-zinc-100">
+              Gr
+            </label>
+            <input
+              type="number"
+              name="gr2"
+              onChange={handleChange}
+              value={updatedProduct.gr2 || ""}
+              className="mt-1 p-3 w-full border border-zinc-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-zinc-100">
+              Cm
+            </label>
+            <input
+              type="number"
+              name="cm2"
+              onChange={handleChange}
+              value={updatedProduct.cm2 || ""}
+              className="mt-1 p-3 w-full border border-zinc-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-zinc-100">
+              40`
+            </label>
+            <input
+              type="number"
+              name="puluh4"
+              onChange={handleChange}
+              value={updatedProduct.puluh4 || ""}
+              readOnly
+              className="mt-1 p-3 w-full border border-zinc-700 rounded-md shadow-sm focus:outline-none "
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-zinc-100">
+              impurity
+            </label>
+            <input
+              type="number"
+              name="impurity"
+              onChange={handleChange}
+              value={updatedProduct.impurity || ""}
+              className="mt-1 p-3 w-full border border-zinc-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-zinc-100">
+              filth
+            </label>
+            <input
+              type="number"
+              name="filth"
+              onChange={handleChange}
+              value={updatedProduct.filth || ""}
+              className="mt-1 p-3 w-full border border-zinc-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-zinc-100">
+              temp
+            </label>
+            <input
+              type="number"
+              name="temp"
+              onChange={handleChange}
+              value={updatedProduct.temp || ""}
+              className="mt-1 p-3 w-full border border-zinc-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-zinc-100">
+              pH
+            </label>
+            <input
+              type="number"
+              name="ph"
+              onChange={handleChange}
+              value={updatedProduct.ph || ""}
+              className="mt-1 p-3 w-full border border-zinc-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-zinc-100">
+              Moisture
+            </label>
+            <input
+              type="number"
+              name="moisture"
+              onChange={handleChange}
+              value={updatedProduct.moisture || ""}
+              className="mt-1 p-3 w-full border border-zinc-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-zinc-100">
+              Whitness
+            </label>
+            <input
+              type="number"
+              name="whitness"
+              onChange={handleChange}
+              value={updatedProduct.whitness || ""}
+              className="mt-1 p-3 w-full border border-zinc-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-zinc-100">
+              Remark
+            </label>
+            <input
+              type="text"
+              name="grade"
+              onChange={handleChange}
+              value={updatedProduct.grade || ""}
               className="mt-1 p-3 w-full border border-zinc-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>

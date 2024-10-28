@@ -32,7 +32,7 @@ const TableBarangKembali = () => {
     // Data produk yang akan ditampilkan
     {
       name: "ITOYORI",
-      date: "21-06-2024",
+      date: "2024-05-03",
       count: 10,
       saldo: 1000,
       kg: 1,

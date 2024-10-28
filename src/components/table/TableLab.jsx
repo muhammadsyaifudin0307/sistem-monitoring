@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AxiosInstace } from "../../../libs/Axios";
 import * as XLSX from "xlsx";
 import { BsPencil, BsTrash, BsCardList } from "react-icons/bs";
 import Pagination from "../pagination/Pagination";
@@ -132,22 +133,90 @@ const TableLab = () => {
     setDeleteModalOpen(false);
   };
 
-  const exportToExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Data Hasil Lab");
-    XLSX.writeFile(workbook, "Data_Hasil_Lab.xlsx");
-    toast.success("Data berhasil diekspor ke Excel!", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      className: "bg-zinc-900 text-white",
-      bodyClassName: "flex items-center",
-    });
+  const exportToExcel = async () => {
+    try {
+      const response = await AxiosInstace.get("/endpoint");
+      const data = response.data;
+
+      const formattedData = data.map((item) => ({
+        No: item.id,
+        Tanggal: item.tanggal,
+        "Jenis Ikan": item.name,
+        "Jelly Strength gr": item.gr,
+        "Jelly Strength cm": item.cm,
+        "Jelly Strength 0°": item.nol,
+        "Jelly Strength gr 40°": item.gr2,
+        IMPURITY: item.impurity,
+        FILTH: item.filth,
+        "Temperatur Produk": item.temp,
+        PH: item.ph,
+        Moisture: item.moisture,
+        Whiteness: item.whitness,
+        Grade: item.grade,
+      }));
+
+      const worksheet = XLSX.utils.json_to_sheet(formattedData, {
+        skipHeader: true,
+      });
+      const workbook = XLSX.utils.book_new();
+
+      XLSX.utils.sheet_add_aoa(
+        worksheet,
+        [
+          [
+            "No",
+            "Tanggal",
+            "Jenis Ikan",
+            "Jelly Strength",
+            "",
+            "",
+            "",
+            "IMPURITY",
+            "FILTH",
+            "Temperatur Produk",
+            "PH",
+            "Moisture",
+            "Whiteness",
+            "Grade",
+          ],
+          ["", "", "", "gr", "cm", "0°", "gr 40°", "", "", "", "", "", ""],
+        ],
+        { origin: "A1" }
+      );
+
+      XLSX.utils.sheet_add_json(worksheet, formattedData, {
+        skipHeader: true,
+        origin: "A3",
+      });
+
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Data Hasil Lab");
+      XLSX.writeFile(workbook, "Data_Hasil_Lab.xlsx");
+
+      toast.success("Data berhasil diekspor ke Excel!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        className: "bg-zinc-900 text-white",
+        bodyClassName: "flex items-center",
+      });
+    } catch (error) {
+      console.error("Gagal mengambil data dari API:", error);
+      toast.error("Gagal mengekspor data ke Excel.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        className: "bg-red-500 text-white",
+        bodyClassName: "flex items-center",
+      });
+    }
   };
 
   return (

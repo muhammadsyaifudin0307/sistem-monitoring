@@ -42,7 +42,7 @@ const TableBarangMasuk = () => {
     {
       id: 1,
       name: "ITOYORI",
-      date: "21-06-2024",
+      date: "2020-02-10",
       count: 10,
       saldo: 1000,
       kg: 1,
@@ -62,7 +62,7 @@ const TableBarangMasuk = () => {
     {
       id: 2,
       name: "MAGURO",
-      date: "22-06-2024",
+      date: "2020-02-10",
       count: 5,
       saldo: 800,
       kg: 2,
