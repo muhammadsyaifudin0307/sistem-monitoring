@@ -59,26 +59,6 @@ const TableBarangKeluar = () => {
       whitness: 55.6,
       grade: "AA",
     },
-    {
-      id: 2,
-      name: "MAGURO",
-      date: "2020-02-10",
-      count: 5,
-      saldo: 800,
-      kg: 2,
-      komposisi: "MG+XP+RT",
-      keterangan: "PT Fresh Tuna",
-      gr: 300.0,
-      cm: 8,
-      js40: 1.10011,
-      impurity: 10.0,
-      filth: 8,
-      temp: 16.2,
-      ph: 6.8,
-      moisture: 72.3,
-      whitness: 54.2,
-      grade: "SS",
-    },
   ];
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -126,7 +106,7 @@ const TableBarangKeluar = () => {
     }
   };
   const handleEditSave = (updatedProduct) => {
-    console.log("Produk telah diperbarui:", updatedProduct);
+    console.log("Data telah diperbarui:", updatedProduct);
     toast.success(`${updatedProduct.name} Berhasil Diperbarui!`, {
       position: "top-right",
       autoClose: 3000,
@@ -142,7 +122,7 @@ const TableBarangKeluar = () => {
   };
 
   const handleDelete = () => {
-    console.log("Produk telah dihapus:", selectedProduct);
+    console.log("Data telah dihapus:", selectedProduct);
     toast.success(`${selectedProduct.name} Berhasil Dihapus!`, {
       position: "top-right",
       autoClose: 3000,

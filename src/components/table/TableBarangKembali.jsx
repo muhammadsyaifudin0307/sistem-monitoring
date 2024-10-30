@@ -1,15 +1,16 @@
 import { useState } from "react";
+import * as XLSX from "xlsx";
 import { BsPencil, BsTrash, BsCardList } from "react-icons/bs";
 import Pagination from "../pagination/Pagination";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AiOutlineSearch } from "react-icons/ai";
 import { PiMicrosoftExcelLogoFill } from "react-icons/pi";
-import ModalBarangKembali from "../modal/add/ModalBarangMasuk";
-import ModalEditBarangMasuk from "../modal/edit/ModalEditBarangMasuk";
-import ModalHapusBarangMasuk from "../modal/hapus/ModalHapusBarangMasuk";
-import ModalDetailBarangMasuk from "../modal/detail/ModalDetailBarangMasuk";
-import ModalImportExcelBarangMasuk from "../modal/import excel/ModalImportExcelBarangMasuk";
+import ModalAddBarangKembali from "../modal/add/ModalAddBarangKembali";
+import ModalEditBarangKembali from "../modal/edit/ModalEditBarangKembali";
+import ModalHapusBarangKembali from "../modal/hapus/ModalHapusBarangKembali";
+import ModalDetailBarangKembali from "../modal/detail/ModalDetailBarangKembali";
+import ModalImportExcelBarangKembali from "../modal/import excel/ModalImportExcelBarangKembali";
 
 const TableBarangKembali = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,7 +26,17 @@ const TableBarangKembali = () => {
 
   const handleImportExcel = (file) => {
     console.log("File Excel yang diimpor:", file);
-    toast.success(`File ${file.name} berhasil diimpor!`);
+    toast.success(`File ${file.name} berhasil diimpor!`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      className: "bg-zinc-900 text-white",
+      bodyClassName: "flex items-center",
+    });
   };
 
   const data = [
@@ -37,6 +48,7 @@ const TableBarangKembali = () => {
       saldo: 1000,
       kg: 1,
       komposisi: "WE+SX+DW+KH",
+      penerima_barang: "Harto",
       keterangan: "Loka Indomina",
       gr: 399.0,
       cm: 10,
@@ -60,7 +72,17 @@ const TableBarangKembali = () => {
 
   const handleAddProduct = (newProduct) => {
     console.log("Produk baru telah ditambahkan:", newProduct);
-    toast.success(`${newProduct.name} berhasil ditambahkan!`);
+    toast.success(`${newProduct.name} Berhasil ditambahkan!`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      className: "bg-zinc-900 text-white",
+      bodyClassName: "flex items-center",
+    });
   };
 
   const handlePageChange = (page) => {
@@ -84,16 +106,52 @@ const TableBarangKembali = () => {
 
   const handleEditSave = (updatedProduct) => {
     console.log("Produk telah diperbarui:", updatedProduct);
-    toast.success(`${updatedProduct.name} berhasil diperbarui!`);
+    toast.success(`${updatedProduct.name} berhasil diperbarui!`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      className: "bg-zinc-900 text-white",
+      bodyClassName: "flex items-center",
+    });
     setEditModalOpen(false);
   };
 
   const handleDelete = () => {
     console.log("Produk telah dihapus:", selectedProduct);
-    toast.success(`${selectedProduct.name} berhasil dihapus!`);
+    toast.success(`${selectedProduct.name} berhasil dihapus!`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      className: "bg-zinc-900 text-white",
+      bodyClassName: "flex items-center",
+    });
     setDeleteModalOpen(false);
   };
-
+  const exportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Data Barang Kembali");
+    XLSX.writeFile(workbook, "Data_Barang_Kembali.xlsx");
+    toast.success("Data berhasil diekspor ke Excel!", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      className: "bg-zinc-900 text-white",
+      bodyClassName: "flex items-center",
+    });
+  };
   return (
     <div className="container mx-auto p-4">
       <div className="flex items-center justify-between mb-5 mt-1">
@@ -116,7 +174,9 @@ const TableBarangKembali = () => {
         </div>
 
         <div className="flex items-center space-x-4">
-          <button className="flex items-center px-4 py-2 bg-blue-500 text-zinc-100 font-bold rounded hover:bg-blue-600">
+          <button
+            onClick={exportToExcel}
+            className="flex items-center px-4 py-2 bg-blue-500 text-zinc-100 font-bold rounded hover:bg-blue-600">
             <PiMicrosoftExcelLogoFill className="mr-2 text-2xl" />
             Convert to Excel
           </button>
@@ -159,7 +219,7 @@ const TableBarangKembali = () => {
               <td className="py-3 px-6">{item.saldo}</td>
               <td className="py-3 px-6">{item.cm}</td>
               <td className="py-3 px-6">{item.js40}</td>
-              <td className="py-3 px-6">{item.name}</td>
+              <td className="py-3 px-6">{item.penerima_barang}</td>
               <td className="py-3 px-6">{item.keterangan}</td>
               <td className="py-3 px-6">
                 <div className="flex items-center justify-center space-x-2">
@@ -198,13 +258,13 @@ const TableBarangKembali = () => {
       />
 
       {/* Modal Components */}
-      <ModalBarangKembali
+      <ModalAddBarangKembali
         isOpen={addModalOpen}
         onClose={() => setAddModalOpen(false)}
         onAdd={handleAddProduct}
       />
       {selectedProduct && (
-        <ModalEditBarangMasuk
+        <ModalEditBarangKembali
           isOpen={editModalOpen}
           onClose={() => setEditModalOpen(false)}
           product={selectedProduct}
@@ -212,7 +272,7 @@ const TableBarangKembali = () => {
         />
       )}
       {selectedProduct && (
-        <ModalHapusBarangMasuk
+        <ModalHapusBarangKembali
           isOpen={deleteModalOpen}
           onClose={() => setDeleteModalOpen(false)}
           product={selectedProduct}
@@ -220,13 +280,13 @@ const TableBarangKembali = () => {
         />
       )}
       {selectedDetailProduct && (
-        <ModalDetailBarangMasuk
+        <ModalDetailBarangKembali
           isOpen={detailModalOpen}
           onClose={() => setDetailModalOpen(false)}
           product={selectedDetailProduct}
         />
       )}
-      <ModalImportExcelBarangMasuk
+      <ModalImportExcelBarangKembali
         isOpen={importModalOpen}
         onClose={() => setImportModalOpen(false)}
         onImport={handleImportExcel}
