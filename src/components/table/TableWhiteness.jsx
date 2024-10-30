@@ -1,4 +1,4 @@
-const TableRekapLab = () => {
+const TableWhiteness = () => {
   return (
     <div>
       <table className="min-w-full table-auto">
@@ -32,4 +32,4 @@ const TableRekapLab = () => {
   );
 };
 
-export default TableRekapLab;
+export default TableWhiteness;

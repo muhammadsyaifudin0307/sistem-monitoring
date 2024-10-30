@@ -7,28 +7,38 @@ import { BsBoxSeam } from "react-icons/bs";
 import { IoHomeOutline } from "react-icons/io5";
 import { LiaFlaskSolid } from "react-icons/lia";
 import { BsFileEarmarkText } from "react-icons/bs";
+import { BsDatabaseAdd } from "react-icons/bs";
 
 const Sidebar = () => {
   const location = useLocation();
   const [isProductOpen, setIsProductOpen] = useState(false);
   const [isHasilLabOpen, setIsHasilLabOpen] = useState(false);
+  const [isProsesOpen, setIsProsesOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   // Close "Product" and "Hasil Lab" pop-ups when location pathname changes
   useEffect(() => {
     setIsProductOpen(false);
     setIsHasilLabOpen(false);
+    setIsProsesOpen(false);
   }, [location]);
 
   // Handle submenu toggle
   const handleProductToggle = () => {
     setIsProductOpen(!isProductOpen);
     setIsHasilLabOpen(false); // Close Hasil Lab submenu when Product is opened
+    setIsProsesOpen(false);
   };
 
   const handleHasilLabToggle = () => {
     setIsHasilLabOpen(!isHasilLabOpen);
     setIsProductOpen(false); // Close Product submenu when Hasil Lab is opened
+    setIsProsesOpen(false);
+  };
+  const handleProsesToggle = () => {
+    setIsProsesOpen(!isProsesOpen);
+    setIsHasilLabOpen(false);
+    setIsProductOpen(false);
   };
 
   return (
@@ -228,6 +238,18 @@ const Sidebar = () => {
                 <ul>
                   <li className="mb-1">
                     <Link
+                      to="/input-lab"
+                      className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
+                        location.pathname === "/input-lab"
+                          ? "rounded-md bg-zinc-600"
+                          : ""
+                      }`}>
+                      <BsDatabaseAdd className="text-2xl text-zinc-100" />
+                      <span className="ml-2">Input Lab</span>
+                    </Link>
+                  </li>
+                  <li className="mb-1">
+                    <Link
                       to="/rekap"
                       className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
                         location.pathname === "/rekap"
@@ -245,6 +267,18 @@ const Sidebar = () => {
               <ul className="ml-4">
                 <li className="mb-1">
                   <Link
+                    to="/input-lab"
+                    className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
+                      location.pathname === "/input-lab"
+                        ? "rounded-md bg-zinc-600"
+                        : ""
+                    }`}>
+                    <BsDatabaseAdd className="text-2xl text-zinc-100" />
+                    <span className="ml-2">Input Lab</span>
+                  </Link>
+                </li>
+                <li className="mb-1">
+                  <Link
                     to="/rekap"
                     className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
                       location.pathname === "/rekap"
@@ -255,22 +289,90 @@ const Sidebar = () => {
                     <span className="ml-2">Rekap</span>
                   </Link>
                 </li>
-
+              </ul>
+            )}
+          </li>
+          <li className="mb-2">
+            <span
+              className={`flex items-center p-2 font-semibold cursor-pointer transition-all duration-500 ease-in-out ${
+                isCollapsed ? "justify-center" : "justify-start"
+              }`}
+              onClick={handleProsesToggle}>
+              <LiaFlaskSolid className="text-2xl text-zinc-100 transform transition-transform duration-500 ease-in-out" />
+              {!isCollapsed && (
+                <span className="ml-2 text-zinc-100 font-bold">Proses</span>
+              )}
+            </span>
+            {isCollapsed && isProsesOpen && (
+              <div
+                style={{
+                  position: "absolute",
+                  left: "5.5rem",
+                  top: "12.8rem",
+                  backgroundColor: "#18181b",
+                  borderRadius: "0.375rem",
+                  padding: "0.5rem",
+                  zIndex: 50,
+                  width: "10rem",
+                  transition: "all 0.5s ease-in-out",
+                }}>
+                <ul>
+                  <li className="mb-1">
+                    <Link
+                      to="/input-proses"
+                      className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
+                        location.pathname === "/input-proses"
+                          ? "rounded-md bg-zinc-600"
+                          : ""
+                      }`}>
+                      <BsDatabaseAdd className="text-2xl text-zinc-100" />
+                      <span className="ml-2">Input Lab</span>
+                    </Link>
+                  </li>
+                  <li className="mb-1">
+                    <Link
+                      to="/rekap"
+                      className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
+                        location.pathname === "/rekap"
+                          ? "rounded-md bg-zinc-600"
+                          : ""
+                      }`}>
+                      <BsFileEarmarkText className="text-2xl text-zinc-100" />
+                      <span className="ml-2">Rsssekap</span>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            )}
+            {!isCollapsed && isProsesOpen && (
+              <ul className="ml-4">
                 <li className="mb-1">
                   <Link
-                    to="/hasil-lab/rekap"
+                    to="/input-proses"
                     className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
-                      location.pathname === "/hasil-lab/rekap"
+                      location.pathname === "/input-proses"
                         ? "rounded-md bg-zinc-600"
                         : ""
                     }`}>
-                    <span className="ml-2">Detail</span>
+                    <BsDatabaseAdd className="text-2xl text-zinc-100" />
+                    <span className="ml-2">Input Proses</span>
+                  </Link>
+                </li>
+                <li className="mb-1">
+                  <Link
+                    to="/rekap"
+                    className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
+                      location.pathname === "/rekap"
+                        ? "rounded-md bg-zinc-600"
+                        : ""
+                    }`}>
+                    <BsFileEarmarkText className="text-2xl text-zinc-100" />
+                    <span className="ml-2">Rekadsdp</span>
                   </Link>
                 </li>
               </ul>
             )}
           </li>
-          {/* Add additional menu items if needed */}
         </ul>
       </nav>
     </aside>

@@ -136,12 +136,13 @@ const TableBarangKembali = () => {
         <thead>
           <tr className="bg-zinc-600 text-zinc-100 uppercase text-sm text-center leading-normal">
             <th className="py-2 px-4">No</th>
-            <th className="py-2 px-4">Tanggal</th>
+            <th className="py-2 px-4">Tanggal Kembali</th>
             <th className="py-2 px-4">Nama Produk</th>
             <th className="py-2 px-4">Jumlah</th>
             <th className="py-2 px-4">Saldo</th>
             <th className="py-2 px-4">Cm</th>
             <th className="py-2 px-4">JS 40`</th>
+            <th className="py-2 px-4">Penerima Barang</th>
             <th className="py-2 px-4">Keterangan</th>
             <th className="py-2 px-4">Action</th>
           </tr>
@@ -158,6 +159,7 @@ const TableBarangKembali = () => {
               <td className="py-3 px-6">{item.saldo}</td>
               <td className="py-3 px-6">{item.cm}</td>
               <td className="py-3 px-6">{item.js40}</td>
+              <td className="py-3 px-6">{item.name}</td>
               <td className="py-3 px-6">{item.keterangan}</td>
               <td className="py-3 px-6">
                 <div className="flex items-center justify-center space-x-2">

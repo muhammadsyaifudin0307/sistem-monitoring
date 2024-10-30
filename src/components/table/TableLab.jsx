@@ -266,7 +266,7 @@ const TableLab = () => {
               Tanggal
             </th>
             <th rowSpan="2" className="border border-zinc-100">
-              Jenis Ikan
+              Jenis Produk
             </th>
             <th colSpan="6" className="border border-zinc-100">
               <span className=" text-zinc-100">Jelly Streight</span>

@@ -5,7 +5,6 @@ import LogoutModal from "./modal/logout/LogoutModal";
 import { RiLogoutCircleLine } from "react-icons/ri";
 
 const Navbar = ({ onLogout }) => {
-  // Tambahkan props onLogout
   const [isModalOpen, setModalOpen] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -13,7 +12,7 @@ const Navbar = ({ onLogout }) => {
 
   const toggleModal = () => {
     setModalOpen(!isModalOpen);
-    setDropdownOpen(false); // Tutup dropdown saat modal terbuka
+    setDropdownOpen(false);
   };
 
   const toggleDropdown = () => {
@@ -22,7 +21,7 @@ const Navbar = ({ onLogout }) => {
 
   const handleLogout = () => {
     setModalOpen(true);
-    setDropdownOpen(false); // Tutup dropdown saat tombol logout diklik
+    setDropdownOpen(false);
   };
 
   useEffect(() => {
@@ -49,6 +48,7 @@ const Navbar = ({ onLogout }) => {
         <div className="gretting-title text-2xl font-serif font-extrabold text-zinc-100">
           Sistem Monitoring Inventori
         </div>
+
         <div className="flex items-center">
           <button
             ref={userButtonRef}
@@ -72,7 +72,6 @@ const Navbar = ({ onLogout }) => {
         </div>
       </header>
 
-      {/* Menggunakan komponen LogoutModal */}
       <LogoutModal
         isOpen={isModalOpen}
         onClose={toggleModal}
@@ -82,9 +81,8 @@ const Navbar = ({ onLogout }) => {
   );
 };
 
-// Tambahkan prop types validation untuk Navbar
 Navbar.propTypes = {
-  onLogout: PropTypes.func.isRequired, // Validasi untuk onLogout
+  onLogout: PropTypes.func.isRequired,
 };
 
 export default Navbar;

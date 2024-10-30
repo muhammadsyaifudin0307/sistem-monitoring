@@ -13,13 +13,15 @@ import Incoming from "./pages/produk/Incoming";
 import Outgoing from "./pages/produk/Outgoing";
 import Reject from "./pages/produk/Reject";
 import Rekap from "./pages/lab/Rekap";
+import InputLab from "./pages/lab/InputLab";
+import InputProses from "./pages/proses/InputProses";
+
 import "./App.css";
 import { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PropTypes from "prop-types";
 
-// ProtectedRoute component
 const ProtectedRoute = ({ children, isAuthenticated }) => {
   return isAuthenticated ? children : <Navigate to="/login" />;
 };
@@ -33,13 +35,11 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // State autentikasi
 
   useEffect(() => {
-    // Cek status autentikasi saat aplikasi dimuat
     const token = localStorage.getItem("authToken");
     if (token) {
       setIsAuthenticated(true);
     }
-  }, []); // Dependency array kosong memastikan hanya dijalankan sekali saat pertama kali render
-
+  }, []);
   const handleLogin = () => {
     setIsAuthenticated(true);
     localStorage.setItem("authToken", "your_auth_token");
@@ -110,10 +110,26 @@ const App = () => {
                 }
               />
               <Route
+                path="/input-lab"
+                element={
+                  <ProtectedRoute isAuthenticated={isAuthenticated}>
+                    <InputLab />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
                 path="/rekap"
                 element={
                   <ProtectedRoute isAuthenticated={isAuthenticated}>
                     <Rekap />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/input-proses"
+                element={
+                  <ProtectedRoute isAuthenticated={isAuthenticated}>
+                    <InputProses />
                   </ProtectedRoute>
                 }
               />

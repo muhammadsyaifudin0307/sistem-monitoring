@@ -1,4 +1,4 @@
-const TableRekapLab = () => {
+const TableBau = () => {
   return (
     <div>
       <table className="min-w-full table-auto">
@@ -32,4 +32,4 @@ const TableRekapLab = () => {
   );
 };
 
-export default TableRekapLab;
+export default TableBau;
