@@ -8,6 +8,7 @@ import { IoHomeOutline } from "react-icons/io5";
 import { LiaFlaskSolid } from "react-icons/lia";
 import { BsFileEarmarkText } from "react-icons/bs";
 import { BsDatabaseAdd } from "react-icons/bs";
+import { MdOutlineRecycling } from "react-icons/md";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -227,7 +228,7 @@ const Sidebar = () => {
                 style={{
                   position: "absolute",
                   left: "5.5rem",
-                  top: "12.8rem",
+                  top: "11.8rem",
                   backgroundColor: "#18181b",
                   borderRadius: "0.375rem",
                   padding: "0.5rem",
@@ -298,7 +299,7 @@ const Sidebar = () => {
                 isCollapsed ? "justify-center" : "justify-start"
               }`}
               onClick={handleProsesToggle}>
-              <LiaFlaskSolid className="text-2xl text-zinc-100 transform transition-transform duration-500 ease-in-out" />
+              <MdOutlineRecycling className="text-2xl text-zinc-100 transform transition-transform duration-500 ease-in-out" />
               {!isCollapsed && (
                 <span className="ml-2 text-zinc-100 font-bold">Proses</span>
               )}
@@ -308,7 +309,7 @@ const Sidebar = () => {
                 style={{
                   position: "absolute",
                   left: "5.5rem",
-                  top: "12.8rem",
+                  top: "14.8rem",
                   backgroundColor: "#18181b",
                   borderRadius: "0.375rem",
                   padding: "0.5rem",
@@ -329,18 +330,6 @@ const Sidebar = () => {
                       <span className="ml-2">Input Lab</span>
                     </Link>
                   </li>
-                  <li className="mb-1">
-                    <Link
-                      to="/rekap"
-                      className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
-                        location.pathname === "/rekap"
-                          ? "rounded-md bg-zinc-600"
-                          : ""
-                      }`}>
-                      <BsFileEarmarkText className="text-2xl text-zinc-100" />
-                      <span className="ml-2">Rsssekap</span>
-                    </Link>
-                  </li>
                 </ul>
               </div>
             )}
@@ -356,18 +345,6 @@ const Sidebar = () => {
                     }`}>
                     <BsDatabaseAdd className="text-2xl text-zinc-100" />
                     <span className="ml-2">Input Proses</span>
-                  </Link>
-                </li>
-                <li className="mb-1">
-                  <Link
-                    to="/rekap"
-                    className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
-                      location.pathname === "/rekap"
-                        ? "rounded-md bg-zinc-600"
-                        : ""
-                    }`}>
-                    <BsFileEarmarkText className="text-2xl text-zinc-100" />
-                    <span className="ml-2">Rekadsdp</span>
                   </Link>
                 </li>
               </ul>

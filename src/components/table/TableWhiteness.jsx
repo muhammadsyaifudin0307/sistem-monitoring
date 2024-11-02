@@ -5,7 +5,7 @@ const TableWhiteness = () => {
         <thead>
           <tr className="bg-zinc-600 text-zinc-100 uppercase text-sm text-center leading-normal">
             <th colSpan="6" className="border border-zinc-100">
-              Produk Yang DiUji
+              {"WHITNESS <50"}
             </th>
           </tr>
           <tr className="bg-zinc-600 text-zinc-100 uppercase text-sm text-center leading-normal">
