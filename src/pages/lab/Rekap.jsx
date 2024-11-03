@@ -7,10 +7,7 @@ const Rekap = () => {
           Rekap Lab Bulanan
         </div>
       </div>
-      <div className="p-6 bg-zinc-900 rounded-lg">
-        <div className="title text-zinc-100 font-bold text-lg mb-4">
-          Produks Yang Diuji
-        </div>
+      <div>
         <FormRekapLab />
       </div>
     </main>

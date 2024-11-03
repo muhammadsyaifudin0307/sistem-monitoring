@@ -17,20 +17,16 @@ const TableProduk = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const [data, setData] = useState([
-    // Gunakan state untuk data produk
     {
       id: 1,
       code: "S0019",
       name: "Hans Burger",
-      img: "https://randomuser.me/api/portraits/men/1.jpg",
     },
     {
       id: 2,
       code: "S0020",
       name: "Jolina Angelle",
-      img: "https://randomuser.me/api/portraits/women/1.jpg",
     },
-    // ... Tambahkan data produk lainnya di sini
   ]);
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -100,7 +96,6 @@ const TableProduk = () => {
           <tr className="bg-zinc-600 text-zinc-100 uppercase text-sm text-center leading-normal">
             <th className="py-2 px-4">No</th>
             <th className="py-2 px-4">Kode Barang</th>
-            <th className="py-2 px-4">Foto</th>
             <th className="py-2 px-4">Nama Produk</th>
             <th className="py-2 px-4">Actions</th>
           </tr>
@@ -112,13 +107,7 @@ const TableProduk = () => {
                 {(currentPage - 1) * itemsPerPage + index + 1}
               </td>
               <td className="py-3 px-6">{item.code}</td>
-              <td className="py-3 px-6">
-                <img
-                  className="w-20 h-20 rounded-md mx-auto"
-                  src={item.img}
-                  alt={item.name}
-                />
-              </td>
+
               <td className="py-3 px-6">{item.name}</td>
               <td className="py-3 px-6">
                 <div className="flex items-center justify-center space-x-2">

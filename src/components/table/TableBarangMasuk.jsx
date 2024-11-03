@@ -210,7 +210,6 @@ const TableBarangMasuk = () => {
           </button>
         </div>
       </div>
-
       <h1 className="text-xl font-bold text-zinc-100 font-serif mb-4">
         Daftar Barang
       </h1>
@@ -267,7 +266,6 @@ const TableBarangMasuk = () => {
           ))}
         </tbody>
       </table>
-
       {/* Pagination */}
       <Pagination
         currentPage={currentPage}
@@ -276,7 +274,6 @@ const TableBarangMasuk = () => {
         itemsPerPage={itemsPerPage}
         onPageChange={handlePageChange}
       />
-
       {/* Modal Components */}
       <ModalAddBarangMasuk
         isOpen={addModalOpen}
@@ -312,6 +309,7 @@ const TableBarangMasuk = () => {
         onImport={handleImportExcel}
       />
       <ToastContainer />
+      zz
     </div>
   );
 };

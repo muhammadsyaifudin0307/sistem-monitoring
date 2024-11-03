@@ -76,7 +76,9 @@ const Sidebar = () => {
               } ${isCollapsed ? "justify-center" : "justify-start"}`}>
               <IoHomeOutline className="text-2xl text-zinc-100 transform transition-transform duration-500 ease-in-out" />
               {!isCollapsed && (
-                <span className="ml-2 text-zinc-100 font-bold">Dashboard</span>
+                <span className="ml-2 text-lg  text-zinc-100 font-bold">
+                  Dashboard
+                </span>
               )}
             </Link>
           </li>
@@ -88,7 +90,7 @@ const Sidebar = () => {
               onClick={handleProductToggle}>
               <BsBoxSeam className="text-2xl text-zinc-100 transform transition-transform duration-500 ease-in-out" />
               {!isCollapsed && (
-                <span className="ml-2 text-zinc-100 font-bold text-base">
+                <span className="ml-2 text-lg text-zinc-100 font-bold">
                   Product
                 </span>
               )}
@@ -220,7 +222,9 @@ const Sidebar = () => {
               onClick={handleHasilLabToggle}>
               <LiaFlaskSolid className="text-2xl text-zinc-100 transform transition-transform duration-500 ease-in-out" />
               {!isCollapsed && (
-                <span className="ml-2 text-zinc-100 font-bold">Hasil Lab</span>
+                <span className="ml-2 text-lg text-zinc-100 font-bold">
+                  Hasil Lab
+                </span>
               )}
             </span>
             {isCollapsed && isHasilLabOpen && (
@@ -301,7 +305,9 @@ const Sidebar = () => {
               onClick={handleProsesToggle}>
               <MdOutlineRecycling className="text-2xl text-zinc-100 transform transition-transform duration-500 ease-in-out" />
               {!isCollapsed && (
-                <span className="ml-2 text-zinc-100 font-bold">Proses</span>
+                <span className="ml-2 text-lg text-zinc-100 font-bold">
+                  Proses
+                </span>
               )}
             </span>
             {isCollapsed && isProsesOpen && (
