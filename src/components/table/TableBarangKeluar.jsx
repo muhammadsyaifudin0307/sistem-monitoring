@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 import { BsPencil, BsTrash, BsCardList } from "react-icons/bs";
 import Pagination from "../pagination/Pagination";
@@ -6,7 +7,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AiOutlineSearch } from "react-icons/ai";
 import { PiMicrosoftExcelLogoFill } from "react-icons/pi";
-import ModalAddBarangKeluar from "../modal/add/ModalAddBarangKeluar";
 import ModalEditBarangKeluar from "../modal/edit/ModalEditBarangKeluar";
 import ModalHapusBarangKeluar from "../modal/hapus/ModalHapusBarangKeluar";
 import ModalDetailBarangKeluar from "../modal/detail/ModalDetailBarangKeluar";
@@ -43,21 +43,8 @@ const TableBarangKeluar = () => {
       name: "ITOYORI",
       date: "2020-02-10",
       count: 8,
-      saldo: 800,
-      kg: 1,
-      komposisi: "WE+SX+DW+KH",
       keterangan: "Loka Indomina",
       tujuan: "Jakarta",
-      gr: 399.0,
-      cm: 10,
-      js40: 1.20009,
-      impurity: 15.0,
-      filth: 10,
-      temp: 18.1,
-      ph: 7,
-      moisture: 75.5,
-      whitness: 55.6,
-      grade: "AA",
     },
   ];
 
@@ -66,22 +53,6 @@ const TableBarangKeluar = () => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-  const [addModalOpen, setAddModalOpen] = useState(false);
-
-  const handleAddProduct = (newProduct) => {
-    console.log("Produk baru telah ditambahkan:", newProduct);
-    toast.success(`${newProduct.name} Berhasil Ditambahkan!`, {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      className: "bg-zinc-900 text-white",
-      bodyClassName: "flex items-center",
-    });
-  };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -154,7 +125,17 @@ const TableBarangKeluar = () => {
       bodyClassName: "flex items-center",
     });
   };
+  const [barangKembali, setbarangKembali] = useState([]);
+  const navigate = useNavigate();
 
+  const handleBarangKembali = (product) => {
+    setbarangKembali((prev) => [...prev, product]);
+    toast.success(`${product.name} berhasil ditambahkan ke Barang Kembali!`);
+  };
+
+  const goToBarangKembaliPage = () => {
+    navigate("/rejecting", { state: { barangKembali } });
+  };
   return (
     <div className="container mx-auto p-4">
       <div className="flex items-center justify-between mb-5 mt-1">
@@ -169,11 +150,6 @@ const TableBarangKeluar = () => {
               <AiOutlineSearch className="absolute left-3 top-1/2 -translate-y-2.5 transform text-gray-400 text-2xl" />
             </div>
           </div>
-          <button
-            onClick={() => setAddModalOpen(true)}
-            className="px-4 py-2 bg-green-500 text-zinc-100 font-bold rounded hover:bg-green-600">
-            Tambah Produk
-          </button>
         </div>
 
         <div className="flex items-center space-x-4">
@@ -202,12 +178,10 @@ const TableBarangKeluar = () => {
             <th className="py-2 px-4">Tanggal</th>
             <th className="py-2 px-4">Nama Produk</th>
             <th className="py-2 px-4">Jumlah</th>
-            <th className="py-2 px-4">Saldo</th>
-            <th className="py-2 px-4">Cm</th>
-            <th className="py-2 px-4">JS 40`</th>
             <th className="py-2 px-4">Tujuan</th>
             <th className="py-2 px-4">Keterangan</th>
             <th className="py-2 px-4">Action</th>
+            <th className="py-2 px-4">Opsi</th>
           </tr>
         </thead>
         <tbody className="text-zinc-100 text-base font-bold text-center">
@@ -219,9 +193,6 @@ const TableBarangKeluar = () => {
               <td className="py-3 px-6">{item.date}</td>
               <td className="py-3 px-6">{item.name}</td>
               <td className="py-3 px-6">{item.count}</td>
-              <td className="py-3 px-6">{item.saldo}</td>
-              <td className="py-3 px-6">{item.cm}</td>
-              <td className="py-3 px-6">{item.js40}</td>
               <td className="py-3 px-6">{item.tujuan}</td>
               <td className="py-3 px-6">{item.keterangan}</td>
               <td className="py-3 px-6">
@@ -246,6 +217,15 @@ const TableBarangKeluar = () => {
                   </button>
                 </div>
               </td>
+              <td className="py-3 px-6">
+                <div className="flex items-center justify-center space-x-2">
+                  <button
+                    onClick={() => handleBarangKembali(item)}
+                    className="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 font-bold">
+                    Barang Kembali
+                  </button>
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -258,12 +238,7 @@ const TableBarangKeluar = () => {
         itemsPerPage={itemsPerPage}
         onPageChange={handlePageChange}
       />
-      {/* Modals */}
-      <ModalAddBarangKeluar
-        isOpen={addModalOpen}
-        onClose={() => setAddModalOpen(false)}
-        onAdd={handleAddProduct}
-      />
+
       <ModalEditBarangKeluar
         isOpen={editModalOpen}
         onClose={() => setEditModalOpen(false)}
@@ -286,7 +261,13 @@ const TableBarangKeluar = () => {
         onClose={() => setImportModalOpen(false)}
         onImport={handleImportExcel}
       />
-
+      <div className="flex justify-between mt-4">
+        <button
+          onClick={goToBarangKembaliPage}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 font-bold">
+          Lihat Barang Kembali
+        </button>
+      </div>
       <ToastContainer />
     </div>
   );

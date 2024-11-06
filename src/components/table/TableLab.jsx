@@ -236,7 +236,7 @@ const TableLab = () => {
           <button
             onClick={() => setAddModalOpen(true)}
             className="px-4 py-2 bg-green-500 text-zinc-100 font-bold rounded hover:bg-green-600">
-            Tambah Produk
+            Tambah
           </button>
         </div>
 

@@ -6,7 +6,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AiOutlineSearch } from "react-icons/ai";
 import { PiMicrosoftExcelLogoFill } from "react-icons/pi";
-import ModalAddBarangKembali from "../modal/add/ModalAddBarangKembali";
 import ModalEditBarangKembali from "../modal/edit/ModalEditBarangKembali";
 import ModalHapusBarangKembali from "../modal/hapus/ModalHapusBarangKembali";
 import ModalDetailBarangKembali from "../modal/detail/ModalDetailBarangKembali";
@@ -42,6 +41,7 @@ const TableBarangKembali = () => {
   const data = [
     // Data produk yang akan ditampilkan
     {
+      id: 1,
       name: "ITOYORI",
       date: "2024-05-03",
       count: 10,
@@ -50,16 +50,6 @@ const TableBarangKembali = () => {
       komposisi: "WE+SX+DW+KH",
       penerima_barang: "Harto",
       keterangan: "Loka Indomina",
-      gr: 399.0,
-      cm: 10,
-      js40: 1.20009,
-      impurity: 15.0,
-      filth: 10,
-      temp: 18.1,
-      ph: 7,
-      moisture: 75.5,
-      whitness: 55.6,
-      grade: 100,
     },
   ];
 
@@ -68,22 +58,6 @@ const TableBarangKembali = () => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-  const [addModalOpen, setAddModalOpen] = useState(false);
-
-  const handleAddProduct = (newProduct) => {
-    console.log("Produk baru telah ditambahkan:", newProduct);
-    toast.success(`${newProduct.name} Berhasil ditambahkan!`, {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      className: "bg-zinc-900 text-white",
-      bodyClassName: "flex items-center",
-    });
-  };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -166,11 +140,6 @@ const TableBarangKembali = () => {
               <AiOutlineSearch className="absolute left-3 top-1/2 -translate-y-2.5 transform text-gray-400 text-2xl" />
             </div>
           </div>
-          <button
-            onClick={() => setAddModalOpen(true)}
-            className="px-4 py-2 bg-green-500 text-zinc-100 font-bold rounded hover:bg-green-600">
-            Tambah Produk
-          </button>
         </div>
 
         <div className="flex items-center space-x-4">
@@ -199,9 +168,6 @@ const TableBarangKembali = () => {
             <th className="py-2 px-4">Tanggal Kembali</th>
             <th className="py-2 px-4">Nama Produk</th>
             <th className="py-2 px-4">Jumlah</th>
-            <th className="py-2 px-4">Saldo</th>
-            <th className="py-2 px-4">Cm</th>
-            <th className="py-2 px-4">JS 40`</th>
             <th className="py-2 px-4">Penerima Barang</th>
             <th className="py-2 px-4">Keterangan</th>
             <th className="py-2 px-4">Action</th>
@@ -216,9 +182,6 @@ const TableBarangKembali = () => {
               <td className="py-3 px-6">{item.date}</td>
               <td className="py-3 px-6">{item.name}</td>
               <td className="py-3 px-6">{item.count}</td>
-              <td className="py-3 px-6">{item.saldo}</td>
-              <td className="py-3 px-6">{item.cm}</td>
-              <td className="py-3 px-6">{item.js40}</td>
               <td className="py-3 px-6">{item.penerima_barang}</td>
               <td className="py-3 px-6">{item.keterangan}</td>
               <td className="py-3 px-6">
@@ -257,12 +220,6 @@ const TableBarangKembali = () => {
         onPageChange={handlePageChange}
       />
 
-      {/* Modal Components */}
-      <ModalAddBarangKembali
-        isOpen={addModalOpen}
-        onClose={() => setAddModalOpen(false)}
-        onAdd={handleAddProduct}
-      />
       {selectedProduct && (
         <ModalEditBarangKembali
           isOpen={editModalOpen}

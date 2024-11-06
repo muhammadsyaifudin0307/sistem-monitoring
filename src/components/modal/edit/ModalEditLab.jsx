@@ -47,7 +47,7 @@ const ModalEditLab = ({ isOpen, onClose, product = {}, onSave }) => {
         aria-hidden="true"></div>
       <div className="hide-scrollbar bg-zinc-900 rounded-lg p-6 z-50 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
         <h2 className="text-xl font-bold mb-6 text-zinc-100 text-center">
-          Edit Barang Keluar
+          Edit Lab
         </h2>
         <form
           className="grid grid-cols-1 sm:grid-cols-2 gap-6"

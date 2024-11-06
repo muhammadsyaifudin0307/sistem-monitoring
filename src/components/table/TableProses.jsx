@@ -7,11 +7,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { AiOutlineSearch } from "react-icons/ai";
 import { PiMicrosoftExcelLogoFill } from "react-icons/pi";
 import ModalEditBarangMasuk from "../modal/edit/ModalEditBarangMasuk";
-import ModalHapusBarangMasuk from "../modal/hapus/ModalHapusBarangMasuk";
 import ModalDetailBarangMasuk from "../modal/detail/ModalDetailBarangMasuk";
 import ModalImportExcelBarangMasuk from "../modal/import excel/ModalImportExcelBarangMasuk";
+import ModalAddProses from "../modal/add/ModalAddProses";
+import ModalHapusProses from "../modal/hapus/ModalHapusProses";
 
-const TableBarangMasuk = () => {
+const TableInputProses = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -20,6 +21,48 @@ const TableBarangMasuk = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedDetailProduct, setSelectedDetailProduct] = useState(null);
   const [importModalOpen, setImportModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [dataProses, setDataProses] = useState([]);
+
+  const handleAddProses = (proses) => {
+    setDataProses([...dataProses, proses]);
+  };
+  const data = [
+    {
+      id: 1,
+      jam: "07.00",
+      produk: "ml (ikan t)",
+      receiving: { organoleptik: 7, thr: 7.1, rej: 8.1 },
+      deboning: "-",
+      wash: "-",
+      soaking: "-",
+      leaching: "-",
+      refinery: "-",
+      mixing: "-",
+      forming: "-",
+      freezing: "-",
+      packing: "-",
+      storing: "-",
+      stuffing: "-",
+    },
+    {
+      id: 2,
+      jam: "07.00",
+      produk: "kurisi (murakami)",
+      receiving: { organoleptik: 5, thr: 4.6, rej: "98" },
+      deboning: "-",
+      wash: "-",
+      soaking: "-",
+      leaching: "-",
+      refinery: "-",
+      mixing: "-",
+      forming: "-",
+      freezing: "-",
+      packing: "-",
+      storing: "-",
+      stuffing: "-",
+    },
+  ];
 
   const handleImportExcel = (file) => {
     console.log("File Excel yang diimpor:", file);
@@ -35,50 +78,6 @@ const TableBarangMasuk = () => {
       bodyClassName: "flex items-center",
     });
   };
-
-  const data = [
-    // Data produk yang akan ditampilkan
-    {
-      id: 1,
-      name: "ITOYORI",
-      date: "2020-02-10",
-      count: 10,
-      saldo: 1000,
-      kg: 1,
-      komposisi: "WE+SX+DW+KH",
-      keterangan: "Loka Indomina",
-      gr: 399.0,
-      cm: 10,
-      js40: 1.20009,
-      impurity: 15.0,
-      filth: 10,
-      temp: 18.1,
-      ph: 7,
-      moisture: 75.5,
-      whitness: 55.6,
-      grade: "SS",
-    },
-    {
-      id: 2,
-      name: "MAGURO",
-      date: "2020-02-10",
-      count: 5,
-      saldo: 800,
-      kg: 2,
-      komposisi: "MG+XP+RT",
-      keterangan: "PT Fresh Tuna",
-      gr: 300.0,
-      cm: 8,
-      js40: 1.10011,
-      impurity: 10.0,
-      filth: 8,
-      temp: 16.2,
-      ph: 6.8,
-      moisture: 72.3,
-      whitness: 54.2,
-      grade: "AA",
-    },
-  ];
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const currentData = data.slice(
@@ -158,7 +157,7 @@ const TableBarangMasuk = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="p-4">
       <div className="flex items-center justify-between mb-5 mt-1">
         <div className="flex items-center space-x-4">
           <div className="search-input flex items-center border border-zinc-100 rounded overflow-hidden flex-grow h-10">
@@ -171,6 +170,11 @@ const TableBarangMasuk = () => {
               <AiOutlineSearch className="absolute left-3 top-1/2 -translate-y-2.5 transform text-gray-400 text-2xl" />
             </div>
           </div>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded font-bold">
+            Tambah Proses
+          </button>
         </div>
 
         <div className="flex items-center space-x-4">
@@ -189,62 +193,111 @@ const TableBarangMasuk = () => {
         </div>
       </div>
       <h1 className="text-xl font-bold text-zinc-100 font-serif mb-4">
-        Daftar Barang
+        Daftar Proses
       </h1>
-      <table className="min-w-full table-auto">
-        <thead>
-          <tr className="bg-zinc-600 text-zinc-100 uppercase text-sm text-center leading-normal">
-            <th className="py-2 px-4">No</th>
-            <th className="py-2 px-4">Tanggal</th>
-            <th className="py-2 px-4">Nama Produk</th>
-            <th className="py-2 px-4">Jumlah</th>
-            <th className="py-2 px-4">Saldo</th>
-            <th className="py-2 px-4">Cm</th>
-            <th className="py-2 px-4">JS 40`</th>
-            <th className="py-2 px-4">Keterangan</th>
-            <th className="py-2 px-4">Action</th>
-          </tr>
-        </thead>
-        <tbody className="text-zinc-100 text-base font-bold text-center">
-          {currentData.map((item, index) => (
-            <tr key={index} className="border-b border-zinc-600">
-              <td className="py-3 px-6">
-                {(currentPage - 1) * itemsPerPage + index + 1}
+      <div className="overflow-x-auto">
+        <table className="min-w-full table-auto">
+          <thead>
+            <tr className="bg-zinc-600 text-zinc-100 uppercase text-sm text-center leading-normal">
+              <th rowSpan="2" className="border border-zinc-100">
+                No
+              </th>
+              <th rowSpan="2" className="border border-zinc-100">
+                Jam
+              </th>
+              <th rowSpan="2" className="border border-zinc-100">
+                Jenis Produk
+              </th>
+              <th colSpan="3" className="border border-zinc-100">
+                <span className="text-zinc-100">Receiving</span>
+              </th>
+              <th colSpan="1" className="border border-zinc-100">
+                <span className="text-zinc-100">Deheading</span>
+              </th>
+              <th colSpan="1" className="border border-zinc-100">
+                <span className="text-zinc-100">Washing I</span>
+              </th>
+              <th colSpan="1" className="border border-zinc-100">
+                <span className="text-zinc-100">Meat Separating</span>
+              </th>
+              <th colSpan="2" className="px-3 py-2 border border-zinc-100">
+                <span className="text-zinc-100">Leaching</span>
+              </th>
+
+              <th className="px-3 py-2 border border-zinc-100" rowSpan="2">
+                Action
+              </th>
+            </tr>
+            <tr className="bg-zinc-600 text-zinc-100 uppercase text-sm text-center leading-normal">
+              <td className="px-3 py-2 border border-zinc-100 font-bold">
+                Organoleptik
               </td>
-              <td className="py-3 px-6">{item.date}</td>
-              <td className="py-3 px-6">{item.name}</td>
-              <td className="py-3 px-6">{item.count}</td>
-              <td className="py-3 px-6">{item.saldo}</td>
-              <td className="py-3 px-6">{item.cm}</td>
-              <td className="py-3 px-6">{item.js40}</td>
-              <td className="py-3 px-6">{item.keterangan}</td>
-              <td className="py-3 px-6">
-                <div className="flex items-center justify-center space-x-2">
-                  <button
-                    onClick={() => openEditModal(item)}
-                    className="text-green-600 hover:text-green-200"
-                    aria-label="Edit">
-                    <BsPencil className="text-xl" />
-                  </button>
-                  <button
-                    onClick={() => openDeleteModal(item)}
-                    className="text-red-600 hover:text-red-200"
-                    aria-label="Delete">
-                    <BsTrash className="text-xl" />
-                  </button>
-                  <button
-                    onClick={() => openDetailModal(item)}
-                    className="text-blue-600 hover:text-blue-200"
-                    aria-label="Detail">
-                    <BsCardList className="text-2xl" />
-                  </button>
-                </div>
+              <td className="px-3 py-2 border border-zinc-100 font-bold">
+                Temp of fish
+              </td>
+              <td className="px-3 py-2 border border-zinc-100 font-bold">
+                Reject
+              </td>
+              <td className="px-3 py-2 border border-zinc-100 font-bold">
+                Temp of fish
+              </td>
+              <td className="px-3 py-2 border border-zinc-100 font-bold">
+                Temp of Produk
+              </td>
+              <td className="px-3 py-2 border border-zinc-100 font-bold">
+                Temp of Produk
+              </td>
+              <td className="px-3 py-2 border border-zinc-100 font-bold">
+                pH{" "}
+              </td>
+              <td className="px-3 py-2 border border-zinc-100 font-bold">
+                Temp of Produk
               </td>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      {/* Pagination */}
+          </thead>
+          <tbody className="text-zinc-100 text-base font-bold text-center">
+            {currentData.map((item, index) => (
+              <tr key={item.id} className="border-b border-zinc-600">
+                <td className="py-3 px-6">
+                  {(currentPage - 1) * itemsPerPage + index + 1}
+                </td>
+                <td className="px-2 py-3">{item.jam}</td>
+                <td className="px-2 py-3">{item.produk}</td>
+                <td className="px-2 py-3">{item.receiving.organoleptik}</td>
+                <td className="px-2 py-3">{item.receiving.thr}</td>
+                <td className="px-2 py-3">{item.receiving.rej}</td>
+                <td className="px-2 py-3">{item.receiving.rej}</td>
+                <td className="px-2 py-3">{item.receiving.rej}</td>
+                <td className="px-2 py-3">{item.receiving.rej}</td>
+                <td className="px-2 py-3">{item.receiving.rej}</td>
+                <td className="px-2 py-3">{item.receiving.rej}</td>
+                <td className="py-3 px-6">
+                  <div className="flex items-center justify-center space-x-2">
+                    <button
+                      onClick={() => openEditModal(item)}
+                      className="text-green-600 hover:text-green-200"
+                      aria-label="Edit">
+                      <BsPencil className="text-xl" />
+                    </button>
+                    <button
+                      onClick={() => openDeleteModal(item)}
+                      className="text-red-600 hover:text-red-200"
+                      aria-label="Delete">
+                      <BsTrash className="text-xl" />
+                    </button>{" "}
+                    <button
+                      onClick={() => openDetailModal(item)}
+                      className="text-blue-600 hover:text-blue-200"
+                      aria-label="Detail">
+                      <BsCardList className="text-2xl" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
@@ -252,6 +305,8 @@ const TableBarangMasuk = () => {
         itemsPerPage={itemsPerPage}
         onPageChange={handlePageChange}
       />
+      {/* Modal Components */}
+
       {selectedProduct && (
         <ModalEditBarangMasuk
           isOpen={editModalOpen}
@@ -261,7 +316,7 @@ const TableBarangMasuk = () => {
         />
       )}
       {selectedProduct && (
-        <ModalHapusBarangMasuk
+        <ModalHapusProses
           isOpen={deleteModalOpen}
           onClose={() => setDeleteModalOpen(false)}
           product={selectedProduct}
@@ -280,9 +335,14 @@ const TableBarangMasuk = () => {
         onClose={() => setImportModalOpen(false)}
         onImport={handleImportExcel}
       />
+      <ModalAddProses
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onAdd={handleAddProses}
+      />
       <ToastContainer />
     </div>
   );
 };
 
-export default TableBarangMasuk;
+export default TableInputProses;

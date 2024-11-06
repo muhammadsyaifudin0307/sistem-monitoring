@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BsPencil, BsTrash } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 import Pagination from "../pagination/Pagination";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,27 +14,25 @@ const TableProduk = () => {
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [addModalOpen, setAddModalOpen] = useState(false); // State untuk modal add produk
+  const [addModalOpen, setAddModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const [data, setData] = useState([
-    {
-      id: 1,
-      code: "S0019",
-      name: "Hans Burger",
-    },
-    {
-      id: 2,
-      code: "S0020",
-      name: "Jolina Angelle",
-    },
+    { id: 1, code: "S0019", name: "Hans Burger" },
+    { id: 2, code: "S0020", name: "Jolina Angelle" },
+    // Tambahkan data produk lainnya sesuai kebutuhan
   ]);
+
+  const [barangMasuk, setBarangMasuk] = useState([]);
+  const [barangKeluar, setBarangKeluar] = useState([]);
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const currentData = data.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  const navigate = useNavigate();
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -50,7 +49,6 @@ const TableProduk = () => {
   };
 
   const handleEditSave = (updatedProduct) => {
-    // Update logika produk di sini
     setData((prevData) =>
       prevData.map((item) =>
         item.id === updatedProduct.id ? updatedProduct : item
@@ -72,9 +70,27 @@ const TableProduk = () => {
     setData((prevData) => [
       ...prevData,
       { ...newProduct, id: prevData.length + 1 },
-    ]); // Tambahkan ID baru
+    ]);
     toast.success(`${newProduct.name} berhasil ditambahkan!`);
-    setAddModalOpen(false); // Tutup modal setelah produk ditambahkan
+    setAddModalOpen(false);
+  };
+
+  const handleBarangMasuk = (product) => {
+    setBarangMasuk((prev) => [...prev, product]);
+    toast.success(`${product.name} berhasil ditambahkan ke Barang Masuk!`);
+  };
+
+  const handleBarangKeluar = (product) => {
+    setBarangKeluar((prev) => [...prev, product]);
+    toast.success(`${product.name} berhasil ditambahkan ke Barang Keluar!`);
+  };
+
+  const goToBarangMasukPage = () => {
+    navigate("/incoming", { state: { barangMasuk } });
+  };
+
+  const goToBarangKeluarPage = () => {
+    navigate("/outgoing", { state: { barangKeluar } });
   };
 
   return (
@@ -91,13 +107,14 @@ const TableProduk = () => {
         </button>
       </div>
 
-      <table className="min-w-full table-auto ">
+      <table className="min-w-full table-auto">
         <thead>
           <tr className="bg-zinc-600 text-zinc-100 uppercase text-sm text-center leading-normal">
             <th className="py-2 px-4">No</th>
             <th className="py-2 px-4">Kode Barang</th>
             <th className="py-2 px-4">Nama Produk</th>
             <th className="py-2 px-4">Actions</th>
+            <th className="py-2 px-4">Opsi</th>
           </tr>
         </thead>
         <tbody className="text-zinc-100 text-base font-bold text-center">
@@ -107,7 +124,6 @@ const TableProduk = () => {
                 {(currentPage - 1) * itemsPerPage + index + 1}
               </td>
               <td className="py-3 px-6">{item.code}</td>
-
               <td className="py-3 px-6">{item.name}</td>
               <td className="py-3 px-6">
                 <div className="flex items-center justify-center space-x-2">
@@ -125,12 +141,25 @@ const TableProduk = () => {
                   </button>
                 </div>
               </td>
+              <td className="py-3 px-6">
+                <div className="flex items-center justify-center space-x-2">
+                  <button
+                    onClick={() => handleBarangMasuk(item)}
+                    className="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 font-bold">
+                    Barang Masuk
+                  </button>
+                  <button
+                    onClick={() => handleBarangKeluar(item)}
+                    className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 font-bold">
+                    Barang Keluar
+                  </button>
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      {/* Pagination */}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
@@ -139,7 +168,6 @@ const TableProduk = () => {
         onPageChange={handlePageChange}
       />
 
-      {/* Modal Edit */}
       {selectedProduct && (
         <ModalEditProduk
           isOpen={editModalOpen}
@@ -149,7 +177,6 @@ const TableProduk = () => {
         />
       )}
 
-      {/* Modal Hapus */}
       {selectedProduct && (
         <ModalHapusProduk
           isOpen={deleteModalOpen}
@@ -159,12 +186,24 @@ const TableProduk = () => {
         />
       )}
 
-      {/* Modal Add Produk */}
       <ModalAddProduk
         isOpen={addModalOpen}
         onClose={() => setAddModalOpen(false)}
-        onAdd={handleAddProduct} // Pastikan untuk mengoper fungsi onAdd
+        onAdd={handleAddProduct}
       />
+
+      <div className="flex justify-between mt-4">
+        <button
+          onClick={goToBarangMasukPage}
+          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 font-bold">
+          Lihat Barang Masuk
+        </button>
+        <button
+          onClick={goToBarangKeluarPage}
+          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 font-bold">
+          Lihat Barang Keluar
+        </button>
+      </div>
     </div>
   );
 };
