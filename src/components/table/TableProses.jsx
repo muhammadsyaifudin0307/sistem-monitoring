@@ -24,9 +24,6 @@ const TableInputProses = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dataProses, setDataProses] = useState([]);
 
-  const handleAddProses = (proses) => {
-    setDataProses([...dataProses, proses]);
-  };
   const data = [
     {
       id: 1,
@@ -63,6 +60,36 @@ const TableInputProses = () => {
       stuffing: "-",
     },
   ];
+  const handleAddProses = (proses) => {
+    console.log("Proses yang diterima dari ModalAddProses: ", proses);
+
+    if (proses && proses.jam && proses.produk) {
+      setDataProses([...dataProses, proses]); // Pastikan data dimasukkan dengan benar
+      toast.success(`${proses.produk} berhasil ditambahkan!`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        className: "bg-zinc-900 text-white",
+        bodyClassName: "flex items-center",
+      });
+    } else {
+      toast.error("Nama proses atau produk tidak ditemukan!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        className: "bg-zinc-900 text-white",
+        bodyClassName: "flex items-center",
+      });
+    }
+  };
 
   const handleImportExcel = (file) => {
     console.log("File Excel yang diimpor:", file);

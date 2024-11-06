@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
   const [formData, setFormData] = useState({
     jam: "",
-    jenisProduk: "",
+    produk: "",
     organoleptik: "",
     tempOfFishReceiving: "",
     reject: "",
@@ -13,19 +13,47 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
     tempOfProductMeatSeparating: "",
     ph: "",
     tempOfProductLeaching: "",
+    tempOfProductRefinary: "",
+    tempOfProductMixing: "",
+    badSmellMixing: "",
+    badColourMixing: "",
+    moistureForming: "",
+    tempOfProductForming: "",
+    foreignMaterialForming: "",
+    tempOfCPFFreezing: "",
+    metalCalibrationPacking: "",
+    metalInclusionRejectPacking: "",
+    labelingPacking: "",
+    tempOfAnteroomStoring: "",
+    tempOfCSR1Storing: "",
+    tempOfCSR2Storing: "",
+    productDehydrationStoring: "",
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
+    // Validasi form data
+    if (!formData.jam || !formData.produk) {
+      alert("Pastikan semua kolom wajib diisi.");
+      return;
+    }
+
+    // Log formData untuk memastikan data yang dikirim benar
+    console.log("Data yang akan ditambahkan: ", formData);
+
+    // Mengirim data ke parent melalui onAdd
     onAdd(formData);
+
+    // Menutup modal setelah submit
     onClose();
+
+    // Reset form data setelah submit
     setFormData({
       jam: "",
-      jenisProduk: "",
+      produk: "",
       organoleptik: "",
       tempOfFishReceiving: "",
       reject: "",
@@ -34,6 +62,21 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
       tempOfProductMeatSeparating: "",
       ph: "",
       tempOfProductLeaching: "",
+      tempOfProductRefinary: "",
+      tempOfProductMixing: "",
+      badSmellMixing: "",
+      badColourMixing: "",
+      moistureForming: "",
+      tempOfProductForming: "",
+      foreignMaterialForming: "",
+      tempOfCPFFreezing: "",
+      metalCalibrationPacking: "",
+      metalInclusionRejectPacking: "",
+      labelingPacking: "",
+      tempOfAnteroomStoring: "",
+      tempOfCSR1Storing: "",
+      tempOfCSR2Storing: "",
+      productDehydrationStoring: "",
     });
   };
 
@@ -44,7 +87,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
       <div
         className="fixed inset-0 bg-zinc-950 opacity-50"
         onClick={onClose}></div>
-      <div className="hide-scrollbar bg-zinc-900 rounded-lg p-6 z-50 w-full max-w-4xl max-h-[90vh] overflow-y-auto ">
+      <div className="hide-scrollbar bg-zinc-900 rounded-lg p-6 z-50 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
         <h2 className="text-xl font-bold mb-4 text-zinc-100">
           Tambah Data Proses
         </h2>
@@ -67,14 +110,15 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
               Jenis Produk
             </label>
             <select
-              name="name"
-              value={formData.jenisProduk}
+              name="produk"
+              value={formData.produk}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500">
               <option value="" disabled>
                 Pilih Produk
               </option>
-              <option value="Produk A"></option>
+              <option value="Produk A">Produk A</option>
+              <option value="Produk B">Produk B</option>
             </select>
           </div>
           <div className="mb-4">
@@ -414,27 +458,27 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             />
           </div>
         </form>
-        <div className="flex justify-end mt-4">
+        <div className="btn flex justify-end mt-4 gap-3">
           <button
-            type="button"
             onClick={onClose}
-            className="bg-zinc-300 hover:bg-zinc-400 text-zinc-800 py-2 px-4 rounded mr-2 font-bold">
-            Batal
+            className=" px-4 py-2 bg-zinc-500 text-white rounded-md hover:bg-zinc-600 focus:outline-none font-bold">
+            Cancel
           </button>
           <button
-            onSubmit={handleSubmit}
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded font-bold">
-            Tambah
+            onClick={handleSubmit}
+            className=" px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none font-bold">
+            Tambah Proses
           </button>
         </div>
       </div>
     </div>
   );
 };
+
 ModalAddProses.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onAdd: PropTypes.func.isRequired,
 };
+
 export default ModalAddProses;
