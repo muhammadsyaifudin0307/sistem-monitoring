@@ -1,96 +1,32 @@
-import { useState } from "react";
-import PropTypes from "prop-types";
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types"; // Import PropTypes
 
-const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
-  const [formData, setFormData] = useState({
-    jam: "",
-    name: "",
-    organoleptik: "",
-    tempOfFishReceiving: "",
-    reject: "",
-    tempOfFishDeheading: "",
-    tempOfProductWashing: "",
-    tempOfProductMeatSeparating: "",
-    ph: "",
-    tempOfProductLeaching: "",
-    tempOfProductRefinary: "",
-    tempOfProductMixing: "",
-    badSmellMixing: "",
-    badColourMixing: "",
-    moistureForming: "",
-    tempOfProductForming: "",
-    foreignMaterialForming: "",
-    tempOfCPFFreezing: "",
-    metalCalibrationPacking: "",
-    metalInclusionRejectPacking: "",
-    labelingPacking: "",
-    tempOfAnteroomStoring: "",
-    tempOfCSR1Storing: "",
-    tempOfCSR2Storing: "",
-    productDehydrationStoring: "",
-  });
+const ModalEditProses = ({ isOpen, onClose, product, onSave }) => {
+  const [updatedProduct, setUpdatedProduct] = useState(product);
+
+  // Gunakan useEffect agar updatedProduct tersinkronisasi saat product berubah
+  useEffect(() => {
+    setUpdatedProduct(product);
+  }, [product]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setUpdatedProduct({ ...updatedProduct, [name]: value });
   };
 
-  const handleSubmit = () => {
-    // Validasi form data
-    if (!formData.jam || !formData.produk) {
-      alert("Pastikan semua kolom wajib diisi.");
-      return;
-    }
-
-    // Log formData untuk memastikan data yang dikirim benar
-    console.log("Data yang akan ditambahkan: ", formData);
-
-    // Mengirim data ke parent melalui onAdd
-    onAdd(formData);
-
-    // Menutup modal setelah submit
-    onClose();
-
-    // Reset form data setelah submit
-    setFormData({
-      jam: "",
-      name: "",
-      organoleptik: "",
-      tempOfFishReceiving: "",
-      reject: "",
-      tempOfFishDeheading: "",
-      tempOfProductWashing: "",
-      tempOfProductMeatSeparating: "",
-      ph: "",
-      tempOfProductLeaching: "",
-      tempOfProductRefinary: "",
-      tempOfProductMixing: "",
-      badSmellMixing: "",
-      badColourMixing: "",
-      moistureForming: "",
-      tempOfProductForming: "",
-      foreignMaterialForming: "",
-      tempOfCPFFreezing: "",
-      metalCalibrationPacking: "",
-      metalInclusionRejectPacking: "",
-      labelingPacking: "",
-      tempOfAnteroomStoring: "",
-      tempOfCSR1Storing: "",
-      tempOfCSR2Storing: "",
-      productDehydrationStoring: "",
-    });
+  const handleSave = () => {
+    onSave(updatedProduct);
   };
 
-  if (!isOpen) return null;
+  if (!isOpen) return null; // Modal tidak ditampilkan jika isOpen bernilai false
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 overflow-hidden">
       <div
         className="fixed inset-0 bg-zinc-950 opacity-50"
         onClick={onClose}></div>
-      <div className="hide-scrollbar bg-zinc-900 rounded-lg p-6 z-50 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-        <h2 className="text-xl font-bold mb-4 text-zinc-100">
-          Tambah Data Proses
-        </h2>
+      <div className="hide-scrollbar bg-zinc-900 rounded-lg p-6 z-50 w-full max-w-4xl max-h-[90vh] overflow-y-auto ">
+        <h2 className="text-xl font-bold mb-4 text-zinc-100">Edit Proses</h2>
         <form className="grid grid-cols-2 sm:grid-cols-3 gap-6">
           <div className="mb-4">
             <label className="block text-base font-medium text-zinc-100">
@@ -99,7 +35,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="time"
               name="jam"
-              value={formData.jam}
+              value={updatedProduct.jam}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
               required
@@ -111,7 +47,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             </label>
             <select
               name="produk"
-              value={formData.name}
+              value={updatedProduct.name}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500">
               <option value="" disabled>
@@ -128,7 +64,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="organoleptik"
-              value={formData.organoleptik}
+              value={updatedProduct.organoleptik}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -140,7 +76,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfFishReceiving"
-              value={formData.tempOfFishReceiving}
+              value={updatedProduct.tempOfFishReceiving}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -152,7 +88,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="reject"
-              value={formData.reject}
+              value={updatedProduct.reject}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -164,7 +100,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfFishDeheading"
-              value={formData.tempOfFishDeheading}
+              value={updatedProduct.tempOfFishDeheading}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -176,7 +112,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductWashing"
-              value={formData.tempOfProductWashing}
+              value={updatedProduct.tempOfProductWashing}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -188,7 +124,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductMeatSeparating"
-              value={formData.tempOfProductMeatSeparating}
+              value={updatedProduct.tempOfProductMeatSeparating}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -200,7 +136,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="ph"
-              value={formData.ph}
+              value={updatedProduct.ph}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -212,7 +148,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -224,7 +160,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -236,7 +172,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -248,7 +184,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -260,7 +196,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -272,7 +208,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -284,7 +220,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -296,7 +232,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -308,7 +244,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -320,7 +256,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -332,7 +268,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -344,7 +280,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -356,7 +292,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -368,7 +304,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -380,7 +316,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -392,7 +328,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -404,7 +340,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -416,7 +352,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -428,7 +364,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -440,7 +376,7 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="number"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
@@ -452,22 +388,22 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
             <input
               type="text"
               name="tempOfProductLeaching"
-              value={formData.tempOfProductLeaching}
+              value={updatedProduct.tempOfProductLeaching}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
         </form>
-        <div className="btn flex justify-end mt-4 gap-3">
+        <div className="flex justify-end mt-4">
           <button
-            onClick={onClose}
-            className=" px-4 py-2 bg-zinc-500 text-white rounded-md hover:bg-zinc-600 focus:outline-none font-bold">
-            Cancel
+            onClick={handleSave}
+            className="bg-green-500 text-white py-2 px-4 rounded mr-2 font-bold">
+            Simpan
           </button>
           <button
-            onClick={handleSubmit}
-            className=" px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none font-bold">
-            Tambah Proses
+            onClick={onClose}
+            className="bg-red-500 text-white py-2 px-4 rounded font-bold">
+            Tutup
           </button>
         </div>
       </div>
@@ -475,10 +411,12 @@ const ModalAddProses = ({ isOpen, onClose, onAdd }) => {
   );
 };
 
-ModalAddProses.propTypes = {
+// Validasi PropTypes
+ModalEditProses.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  onAdd: PropTypes.func.isRequired,
+  product: PropTypes.object.isRequired,
+  onSave: PropTypes.func.isRequired,
 };
 
-export default ModalAddProses;
+export default ModalEditProses;

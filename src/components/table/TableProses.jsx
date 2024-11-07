@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AiOutlineSearch } from "react-icons/ai";
 import { PiMicrosoftExcelLogoFill } from "react-icons/pi";
-import ModalEditBarangMasuk from "../modal/edit/ModalEditBarangMasuk";
+import ModalEditProses from "../modal/edit/ModalEdtProses";
 import ModalDetailBarangMasuk from "../modal/detail/ModalDetailBarangMasuk";
 import ModalImportExcelBarangMasuk from "../modal/import excel/ModalImportExcelBarangMasuk";
 import ModalAddProses from "../modal/add/ModalAddProses";
@@ -28,7 +28,7 @@ const TableInputProses = () => {
     {
       id: 1,
       jam: "07.00",
-      produk: "ml (ikan t)",
+      name: "ml (ikan t)",
       receiving: { organoleptik: 7, thr: 7.1, rej: 8.1 },
       deboning: "-",
       wash: "-",
@@ -45,7 +45,7 @@ const TableInputProses = () => {
     {
       id: 2,
       jam: "07.00",
-      produk: "kurisi (murakami)",
+      name: "kurisi (murakami)",
       receiving: { organoleptik: 5, thr: 4.6, rej: "98" },
       deboning: "-",
       wash: "-",
@@ -289,7 +289,7 @@ const TableInputProses = () => {
                   {(currentPage - 1) * itemsPerPage + index + 1}
                 </td>
                 <td className="px-2 py-3">{item.jam}</td>
-                <td className="px-2 py-3">{item.produk}</td>
+                <td className="px-2 py-3">{item.name}</td>
                 <td className="px-2 py-3">{item.receiving.organoleptik}</td>
                 <td className="px-2 py-3">{item.receiving.thr}</td>
                 <td className="px-2 py-3">{item.receiving.rej}</td>
@@ -335,7 +335,7 @@ const TableInputProses = () => {
       {/* Modal Components */}
 
       {selectedProduct && (
-        <ModalEditBarangMasuk
+        <ModalEditProses
           isOpen={editModalOpen}
           onClose={() => setEditModalOpen(false)}
           product={selectedProduct}
