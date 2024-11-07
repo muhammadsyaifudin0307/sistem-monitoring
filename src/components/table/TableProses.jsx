@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { AiOutlineSearch } from "react-icons/ai";
 import { PiMicrosoftExcelLogoFill } from "react-icons/pi";
 import ModalEditProses from "../modal/edit/ModalEdtProses";
-import ModalDetailBarangMasuk from "../modal/detail/ModalDetailBarangMasuk";
+import ModalDetailProses from "../modal/detail/ModalDetailProses";
 import ModalImportExcelBarangMasuk from "../modal/import excel/ModalImportExcelBarangMasuk";
 import ModalAddProses from "../modal/add/ModalAddProses";
 import ModalHapusProses from "../modal/hapus/ModalHapusProses";
@@ -28,36 +28,40 @@ const TableInputProses = () => {
     {
       id: 1,
       jam: "07.00",
+      tanggal: "12-2-2024",
       name: "ml (ikan t)",
       receiving: { organoleptik: 7, thr: 7.1, rej: 8.1 },
-      deboning: "-",
-      wash: "-",
-      soaking: "-",
-      leaching: "-",
-      refinery: "-",
-      mixing: "-",
-      forming: "-",
-      freezing: "-",
-      packing: "-",
-      storing: "-",
-      stuffing: "-",
+      deboning: { dfish: 5 },
+      wash: { tpwash: 5 },
+      meat_spr: { tpspr: 5 },
+      leaching: { ph: 5, tpl: 4.6 },
+      refinery: { tpr: 5 },
+      mixing: { tpm: 5, bds: 4.6, bdc: 3 },
+      forming: { mois: 5, top: 4.6, rem: 9 },
+      freezing: { tpcf: 5, tpf: 4.6 },
+      packing: { mtl: 5, mir: 4.6, leb: 8 },
+      storing: { atr: 5, tcsr1: 4.6, tcsr2: 5, cond: 5 },
+      stuffing: { conchek: 5, quality: 4, brok: 6 },
+      remark: "AA",
     },
     {
       id: 2,
       jam: "07.00",
-      name: "kurisi (murakami)",
-      receiving: { organoleptik: 5, thr: 4.6, rej: "98" },
-      deboning: "-",
-      wash: "-",
-      soaking: "-",
-      leaching: "-",
-      refinery: "-",
-      mixing: "-",
-      forming: "-",
-      freezing: "-",
-      packing: "-",
-      storing: "-",
-      stuffing: "-",
+      tanggal: "12-2-2024",
+      name: "ml (ikan t)",
+      receiving: { organoleptik: 7, thr: 7.1, rej: 8.1 },
+      deboning: { dfish: 5 },
+      wash: { tpwash: 5 },
+      meat_spr: { tpspr: 5 },
+      leaching: { ph: 5, tpl: 4.6 },
+      refinery: { tpr: 5 },
+      mixing: { tpm: 5, bds: 4.6, bdc: 3 },
+      forming: { mois: 5, top: 4.6, rem: 9 },
+      freezing: { tpcf: 5, tpf: 4.6 },
+      packing: { mtl: 5, mir: 4.6, leb: 8 },
+      storing: { atr: 5, tcsr1: 4.6, tcsr2: 5, cond: 5 },
+      stuffing: { conchek: 5, quality: 4, brok: 6 },
+      remark: "AB",
     },
   ];
   const handleAddProses = (proses) => {
@@ -168,8 +172,8 @@ const TableInputProses = () => {
   const exportToExcel = () => {
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Data Barang Masuk");
-    XLSX.writeFile(workbook, "Data_Barang_Masuk.xlsx");
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Data Proses");
+    XLSX.writeFile(workbook, "Data_Proses.xlsx");
     toast.success("Data berhasil diekspor ke Excel!", {
       position: "top-right",
       autoClose: 3000,
@@ -192,7 +196,7 @@ const TableInputProses = () => {
               <input
                 type="search"
                 className="p-2 pl-10 w-full h-full outline-none"
-                placeholder="Cari Barang..."
+                placeholder="Cari Proses..."
               />
               <AiOutlineSearch className="absolute left-3 top-1/2 -translate-y-2.5 transform text-gray-400 text-2xl" />
             </div>
@@ -233,6 +237,9 @@ const TableInputProses = () => {
                 Jam
               </th>
               <th rowSpan="2" className="border border-zinc-100">
+                Tanggal
+              </th>
+              <th rowSpan="2" className="border border-zinc-100">
                 Jenis Produk
               </th>
               <th colSpan="3" className="border border-zinc-100">
@@ -247,37 +254,35 @@ const TableInputProses = () => {
               <th colSpan="1" className="border border-zinc-100">
                 <span className="text-zinc-100">Meat Separating</span>
               </th>
-              <th colSpan="2" className="px-3 py-2 border border-zinc-100">
+              <th colSpan="2" className="px-2 py-2 border border-zinc-100">
                 <span className="text-zinc-100">Leaching</span>
               </th>
 
-              <th className="px-3 py-2 border border-zinc-100" rowSpan="2">
+              <th className="px-2 py-2 border border-zinc-100" rowSpan="2">
                 Action
               </th>
             </tr>
             <tr className="bg-zinc-600 text-zinc-100 uppercase text-sm text-center leading-normal">
-              <td className="px-3 py-2 border border-zinc-100 font-bold">
+              <td className="px-2 py-2 border border-zinc-100 font-bold">
                 Organoleptik
               </td>
-              <td className="px-3 py-2 border border-zinc-100 font-bold">
+              <td className="px-2 py-2 border border-zinc-100 font-bold">
                 Temp of fish
               </td>
-              <td className="px-3 py-2 border border-zinc-100 font-bold">
+              <td className="px-2 py-2 border border-zinc-100 font-bold">
                 Reject
               </td>
-              <td className="px-3 py-2 border border-zinc-100 font-bold">
+              <td className="px-2 py-2 border border-zinc-100 font-bold">
                 Temp of fish
               </td>
-              <td className="px-3 py-2 border border-zinc-100 font-bold">
+              <td className="px-2 py-2 border border-zinc-100 font-bold">
                 Temp of Produk
               </td>
-              <td className="px-3 py-2 border border-zinc-100 font-bold">
+              <td className="px-2 py-2 border border-zinc-100 font-bold">
                 Temp of Produk
               </td>
-              <td className="px-3 py-2 border border-zinc-100 font-bold">
-                pH{" "}
-              </td>
-              <td className="px-3 py-2 border border-zinc-100 font-bold">
+              <td className="px-2 py-2 border border-zinc-100 font-bold">pH</td>
+              <td className="px-2 py-2 border border-zinc-100 font-bold">
                 Temp of Produk
               </td>
             </tr>
@@ -285,19 +290,20 @@ const TableInputProses = () => {
           <tbody className="text-zinc-100 text-base font-bold text-center">
             {currentData.map((item, index) => (
               <tr key={item.id} className="border-b border-zinc-600">
-                <td className="py-3 px-6">
+                <td className="py-3 px-1">
                   {(currentPage - 1) * itemsPerPage + index + 1}
                 </td>
                 <td className="px-2 py-3">{item.jam}</td>
+                <td className="px-2 py-3">{item.tanggal}</td>
                 <td className="px-2 py-3">{item.name}</td>
                 <td className="px-2 py-3">{item.receiving.organoleptik}</td>
                 <td className="px-2 py-3">{item.receiving.thr}</td>
                 <td className="px-2 py-3">{item.receiving.rej}</td>
-                <td className="px-2 py-3">{item.receiving.rej}</td>
-                <td className="px-2 py-3">{item.receiving.rej}</td>
-                <td className="px-2 py-3">{item.receiving.rej}</td>
-                <td className="px-2 py-3">{item.receiving.rej}</td>
-                <td className="px-2 py-3">{item.receiving.rej}</td>
+                <td className="px-2 py-3">{item.deboning.dfish}</td>
+                <td className="px-2 py-3">{item.wash.tpwash}</td>
+                <td className="px-2 py-3">{item.meat_spr.tpspr}</td>
+                <td className="px-2 py-3">{item.leaching.ph}</td>
+                <td className="px-2 py-3">{item.leaching.tpl}</td>
                 <td className="py-3 px-6">
                   <div className="flex items-center justify-center space-x-2">
                     <button
@@ -351,7 +357,7 @@ const TableInputProses = () => {
         />
       )}
       {selectedDetailProduct && (
-        <ModalDetailBarangMasuk
+        <ModalDetailProses
           isOpen={detailModalOpen}
           onClose={() => setDetailModalOpen(false)}
           product={selectedDetailProduct}

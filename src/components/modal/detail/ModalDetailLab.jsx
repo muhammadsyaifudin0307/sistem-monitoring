@@ -1,4 +1,4 @@
-import PropTypes from "prop-types"; // Import PropTypes
+import PropTypes from "prop-types";
 import { BsGrid } from "react-icons/bs";
 import { MdOutlineCalendarMonth } from "react-icons/md";
 

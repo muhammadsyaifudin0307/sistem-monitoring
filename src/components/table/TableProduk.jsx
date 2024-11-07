@@ -7,11 +7,12 @@ import "react-toastify/dist/ReactToastify.css";
 import ModalEditProduk from "../modal/edit/ModalEditProduk";
 import ModalHapusProduk from "../modal/hapus/ModalHapusProduk";
 import ModalAddProduk from "../modal/add/ModalAddProduk";
+import { Tooltip } from "react-tooltip";
+import { IoEnterOutline, IoExitOutline } from "react-icons/io5";
 
 const TableProduk = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
@@ -77,12 +78,32 @@ const TableProduk = () => {
 
   const handleBarangMasuk = (product) => {
     setBarangMasuk((prev) => [...prev, product]);
-    toast.success(`${product.name} berhasil ditambahkan ke Barang Masuk!`);
+    toast.success(`${product.name} berhasil ditambahkan ke Barang Masuk!`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      className: "bg-zinc-900 text-white",
+      bodyClassName: "flex items-center",
+    });
   };
 
   const handleBarangKeluar = (product) => {
     setBarangKeluar((prev) => [...prev, product]);
-    toast.success(`${product.name} berhasil ditambahkan ke Barang Keluar!`);
+    toast.success(`${product.name} berhasil ditambahkan ke Barang Keluar!`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      className: "bg-zinc-900 text-white",
+      bodyClassName: "flex items-center",
+    });
   };
 
   const goToBarangMasukPage = () => {
@@ -95,18 +116,34 @@ const TableProduk = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="flex items-center justify-between mb-5">
+      <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold text-zinc-100 font-serif">
           Daftar Produk
         </h1>
         <ToastContainer />
-        <button
-          onClick={() => setAddModalOpen(true)}
-          className="mb-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 font-bold">
-          Tambah Produk
-        </button>
-      </div>
+        <div className="flex items-center mb-4 gap-3">
+          <button
+            data-tooltip-id="masukTooltip"
+            data-tooltip-content="Lihat Barang Masuk"
+            onClick={goToBarangMasukPage}
+            className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 font-bold flex items-center gap-2">
+            <IoEnterOutline className="text-2xl" />
+          </button>
 
+          <button
+            data-tooltip-id="keluarTooltip"
+            data-tooltip-content="Lihat Barang Keluar"
+            onClick={goToBarangKeluarPage}
+            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 font-bold flex items-center gap-2">
+            <IoExitOutline className="text-2xl" />
+          </button>
+          <button
+            onClick={() => setAddModalOpen(true)}
+            className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 font-bold">
+            Tambah Produk
+          </button>
+        </div>
+      </div>
       <table className="min-w-full table-auto">
         <thead>
           <tr className="bg-zinc-600 text-zinc-100 uppercase text-sm text-center leading-normal">
@@ -144,11 +181,15 @@ const TableProduk = () => {
               <td className="py-3 px-6">
                 <div className="flex items-center justify-center space-x-2">
                   <button
+                    data-tooltip-id="masukTooltip"
+                    data-tooltip-content="Tambahkan ke Barang Masuk"
                     onClick={() => handleBarangMasuk(item)}
                     className="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 font-bold">
                     Barang Masuk
                   </button>
                   <button
+                    data-tooltip-id="keluarTooltip"
+                    data-tooltip-content="Tambahkan ke Barang Keluar"
                     onClick={() => handleBarangKeluar(item)}
                     className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 font-bold">
                     Barang Keluar
@@ -159,6 +200,9 @@ const TableProduk = () => {
           ))}
         </tbody>
       </table>
+
+      <Tooltip id="masukTooltip" place="top" type="dark" effect="solid" />
+      <Tooltip id="keluarTooltip" place="top" type="dark" effect="solid" />
 
       <Pagination
         currentPage={currentPage}
@@ -191,19 +235,6 @@ const TableProduk = () => {
         onClose={() => setAddModalOpen(false)}
         onAdd={handleAddProduct}
       />
-
-      <div className="flex justify-between mt-4">
-        <button
-          onClick={goToBarangMasukPage}
-          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 font-bold">
-          Lihat Barang Masuk
-        </button>
-        <button
-          onClick={goToBarangKeluarPage}
-          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 font-bold">
-          Lihat Barang Keluar
-        </button>
-      </div>
     </div>
   );
 };

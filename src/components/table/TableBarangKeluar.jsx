@@ -11,6 +11,8 @@ import ModalEditBarangKeluar from "../modal/edit/ModalEditBarangKeluar";
 import ModalHapusBarangKeluar from "../modal/hapus/ModalHapusBarangKeluar";
 import ModalDetailBarangKeluar from "../modal/detail/ModalDetailBarangKeluar";
 import ModalImportExcelBarangKeluar from "../modal/import excel/ModalImportExcelBarangKeluar";
+import { AiOutlineRollback } from "react-icons/ai";
+import { Tooltip } from "react-tooltip";
 
 const TableBarangKeluar = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -130,7 +132,17 @@ const TableBarangKeluar = () => {
 
   const handleBarangKembali = (product) => {
     setbarangKembali((prev) => [...prev, product]);
-    toast.success(`${product.name} berhasil ditambahkan ke Barang Kembali!`);
+    toast.success(`${product.name} berhasil ditambahkan ke Barang Kembali!`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      className: "bg-zinc-900 text-white",
+      bodyClassName: "flex items-center",
+    });
   };
 
   const goToBarangKembaliPage = () => {
@@ -153,6 +165,13 @@ const TableBarangKeluar = () => {
         </div>
 
         <div className="flex items-center space-x-4">
+          <button
+            data-tooltip-id="kembaliTooltip"
+            data-tooltip-content="Lihat Barang kembali"
+            onClick={goToBarangKembaliPage}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 font-bold">
+            <AiOutlineRollback className="text-2xl" />
+          </button>
           <button
             onClick={exportToExcel} // Tambahkan onClick untuk ekspor ke Excel
             className="flex items-center px-4 py-2 bg-blue-500 text-zinc-100 font-bold rounded hover:bg-blue-600">
@@ -230,6 +249,7 @@ const TableBarangKeluar = () => {
           ))}
         </tbody>
       </table>
+      <Tooltip id="kembaliTooltip" place="top" type="dark" effect="solid" />
 
       <Pagination
         currentPage={currentPage}
@@ -261,13 +281,8 @@ const TableBarangKeluar = () => {
         onClose={() => setImportModalOpen(false)}
         onImport={handleImportExcel}
       />
-      <div className="flex justify-between mt-4">
-        <button
-          onClick={goToBarangKembaliPage}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 font-bold">
-          Lihat Barang Kembali
-        </button>
-      </div>
+
+      <div className="flex justify-between mt-4"></div>
       <ToastContainer />
     </div>
   );
