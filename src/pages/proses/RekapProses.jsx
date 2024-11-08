@@ -1,38 +1,41 @@
 import { useState } from "react";
-import RekapBulanan from "../../components/tabs/RekapBulanan";
+import FormRekapProses from "../../components/form/FormRekapProses";
 import RekapHarian from "../../components/tabs/RekapHarian";
+
 const RekapProses = () => {
   const [activeTab, setActiveTab] = useState("monthly");
 
   return (
-    <div className="p-4">
-      {/* Tab Navigasi */}
-      <div className="flex border-b border-gray-200">
-        <button
-          onClick={() => setActiveTab("monthly")}
-          className={`px-4 py-2 text-sm font-medium ${
-            activeTab === "monthly"
-              ? "text-blue-500 border-b-2 border-blue-500"
-              : "text-gray-500"
-          }`}>
-          Rekap Bulanan
-        </button>
-        <button
-          onClick={() => setActiveTab("daily")}
-          className={`px-4 py-2 text-sm font-medium ${
-            activeTab === "daily"
-              ? "text-blue-500 border-b-2 border-blue-500"
-              : "text-gray-500"
-          }`}>
-          Rekap Harian
-        </button>
-      </div>
+    <main className="p-4 min-h-screen">
+      <div className="p-6 bg-zinc-900 shadow-lg rounded-lg mx-auto">
+        {/* Tab Navigasi */}
+        <div className="flex border-b border-gray-600 mb-4">
+          <button
+            onClick={() => setActiveTab("daily")}
+            className={`px-6 py-3 text-sm font-medium transition-colors duration-300 ${
+              activeTab === "daily"
+                ? "text-zinc-100 bg-zinc-600 border-b-4 border-zinc-400 rounded-t-lg"
+                : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-500 rounded-t-lg"
+            }`}>
+            Rekap Harian
+          </button>
+          <button
+            onClick={() => setActiveTab("monthly")}
+            className={`px-6 py-3 text-sm font-medium transition-colors duration-300 ${
+              activeTab === "monthly"
+                ? "text-zinc-100 bg-zinc-600 border-b-4 border-zinc-400 rounded-t-lg"
+                : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-500 rounded-t-lg"
+            }`}>
+            Rekap Bulanan
+          </button>
+        </div>
 
-      {/* Konten Tab */}
-      <div className="mt-4">
-        {activeTab === "monthly" ? <RekapBulanan /> : <RekapHarian />}
+        {/* Konten Tab */}
+        <div className="mt-4">
+          {activeTab === "monthly" ? <FormRekapProses /> : <RekapHarian />}
+        </div>
       </div>
-    </div>
+    </main>
   );
 };
 
