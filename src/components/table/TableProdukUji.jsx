@@ -1,4 +1,18 @@
-const TableProdukUji = () => {
+import { forwardRef, useImperativeHandle, useState } from "react";
+
+const TableProdukUji = forwardRef((props, ref) => {
+  const [data] = useState([
+    { gr: "dd", cm: "p", zero: "g", gr2: "g", cm2: "g", forty: "g" },
+    { gr: "dd2", cm: "p2", zero: "g2", gr2: "g2", cm2: "g2", forty: "g2" },
+  ]);
+
+  // Menambahkan fungsionalitas getData
+  useImperativeHandle(ref, () => ({
+    getData: () => {
+      return data;
+    },
+  }));
+
   return (
     <div>
       <table className="min-w-full table-auto">
@@ -18,18 +32,23 @@ const TableProdukUji = () => {
           </tr>
         </thead>
         <tbody className="text-zinc-100 text-base font-bold text-center">
-          <tr className="border-b border-zinc-600">
-            <td className=" ">dd</td>
-            <td className="px-2 py-3">p</td>
-            <td className="px-2 py-3">g</td>
-            <td className="px-2 py-3">g</td>
-            <td className="px-2 py-3">g</td>
-            <td className="px-2 py-3">g</td>
-          </tr>
+          {data.map((item, index) => (
+            <tr className="border-b border-zinc-600" key={index}>
+              <td>{item.gr}</td>
+              <td className="px-2 py-3">{item.cm}</td>
+              <td className="px-2 py-3">{item.zero}</td>
+              <td className="px-2 py-3">{item.gr2}</td>
+              <td className="px-2 py-3">{item.cm2}</td>
+              <td className="px-2 py-3">{item.forty}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
   );
-};
+});
+
+// Menambahkan displayName untuk debugging
+TableProdukUji.displayName = "TableProdukUji";
 
 export default TableProdukUji;

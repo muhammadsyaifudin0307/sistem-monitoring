@@ -6,6 +6,7 @@ import { Tooltip } from "react-tooltip";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as XLSX from "xlsx";
+import { PiMicrosoftExcelLogoFill } from "react-icons/pi";
 
 const RekapHarian = () => {
   const [detailModalOpen, setDetailModalOpen] = useState(false);
@@ -82,7 +83,8 @@ const RekapHarian = () => {
 
         <button
           onClick={handleExportToExcel}
-          className="bg-green-500 text-white font-semibold px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-200">
+          className="flex items-center  bg-green-500 text-white font-bold px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-200">
+          <PiMicrosoftExcelLogoFill className="mr-2 text-2xl" />
           Convert to Excel
         </button>
       </div>

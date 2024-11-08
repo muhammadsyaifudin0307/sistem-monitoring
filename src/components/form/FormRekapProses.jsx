@@ -2,6 +2,7 @@ import { useState } from "react";
 import RekapBulanan from "../tabs/RekapBulanan";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { PiMicrosoftExcelLogoFill } from "react-icons/pi";
 
 const FormRekapProses = () => {
   const [activeMonth, setActiveMonth] = useState("January");
@@ -50,8 +51,9 @@ const FormRekapProses = () => {
         <div className="flex justify-end mb-4 gap-2">
           <button
             onClick={handleExportToExcel}
-            className="bg-green-500 text-white font-semibold px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-200">
-            Ekspor ke Excel
+            className="flex item-center bg-green-500 text-white font-bold px-4 py-2 rounded-md hover:bg-green-600 transition-colors duration-200">
+            <PiMicrosoftExcelLogoFill className="mr-2 text-2xl" />
+            Convert to Excel
           </button>
           <input
             type="number"
