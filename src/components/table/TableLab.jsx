@@ -11,6 +11,7 @@ import ModalEditLab from "../modal/edit/ModalEditLab";
 import ModalAddLab from "../modal/add/ModalAddLab";
 import ModalHapusLab from "../modal/hapus/ModalHapusLab";
 import ModalDetailLab from "../modal/detail/ModalDetailLab";
+import { Tooltip } from "react-tooltip";
 
 const TableLab = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -305,18 +306,24 @@ const TableLab = () => {
               <td className="px-2 py-3">
                 <div className="flex items-center justify-center space-x-2">
                   <button
+                    data-tooltip-id="btnTooltip"
+                    data-tooltip-content="Edit"
                     onClick={() => openEditModal(item)}
                     className="text-green-600 hover:text-green-200"
                     aria-label="Edit">
                     <BsPencil className="text-xl" />
                   </button>
                   <button
+                    data-tooltip-id="btnTooltip"
+                    data-tooltip-content="Delete"
                     onClick={() => openDeleteModal(item)}
                     className="text-red-600 hover:text-red-200"
                     aria-label="Delete">
                     <BsTrash className="text-xl" />
                   </button>
                   <button
+                    data-tooltip-id="btnTooltip"
+                    data-tooltip-content="Detail"
                     onClick={() => openDetailModal(item)}
                     className="text-blue-600 hover:text-blue-200"
                     aria-label="Detail">
@@ -328,6 +335,8 @@ const TableLab = () => {
           ))}
         </tbody>
       </table>
+      <Tooltip id="btnTooltip" place="top" type="dark" effect="solid" />
+
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

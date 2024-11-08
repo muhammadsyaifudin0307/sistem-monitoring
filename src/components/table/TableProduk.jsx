@@ -165,12 +165,16 @@ const TableProduk = () => {
               <td className="py-3 px-6">
                 <div className="flex items-center justify-center space-x-2">
                   <button
+                    data-tooltip-id="btnTooltip"
+                    data-tooltip-content="Edit"
                     onClick={() => openEditModal(item)}
                     className="text-green-600 hover:text-green-200"
                     aria-label="Edit">
                     <BsPencil className="text-xl" />
                   </button>
                   <button
+                    data-tooltip-id="btnTooltip"
+                    data-tooltip-content="Delete"
                     onClick={() => openDeleteModal(item)}
                     className="text-red-600 hover:text-red-200"
                     aria-label="Delete">
@@ -181,15 +185,11 @@ const TableProduk = () => {
               <td className="py-3 px-6">
                 <div className="flex items-center justify-center space-x-2">
                   <button
-                    data-tooltip-id="masukTooltip"
-                    data-tooltip-content="Tambahkan ke Barang Masuk"
                     onClick={() => handleBarangMasuk(item)}
                     className="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 font-bold">
                     Barang Masuk
                   </button>
                   <button
-                    data-tooltip-id="keluarTooltip"
-                    data-tooltip-content="Tambahkan ke Barang Keluar"
                     onClick={() => handleBarangKeluar(item)}
                     className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 font-bold">
                     Barang Keluar
@@ -203,6 +203,7 @@ const TableProduk = () => {
 
       <Tooltip id="masukTooltip" place="top" type="dark" effect="solid" />
       <Tooltip id="keluarTooltip" place="top" type="dark" effect="solid" />
+      <Tooltip id="btnTooltip" place="top" type="dark" effect="solid" />
 
       <Pagination
         currentPage={currentPage}

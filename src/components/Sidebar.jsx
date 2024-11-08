@@ -339,9 +339,9 @@ const Sidebar = () => {
 
                   <li className="mb-1">
                     <Link
-                      to="/rekap"
+                      to="/rekap-proses"
                       className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
-                        location.pathname === "/rekap"
+                        location.pathname === "/rekap-proses"
                           ? "rounded-md bg-zinc-600"
                           : ""
                       }`}>
@@ -368,9 +368,9 @@ const Sidebar = () => {
                 </li>
                 <li className="mb-1">
                   <Link
-                    to="/rekap"
+                    to="/rekap-proses"
                     className={`flex items-center p-2 text-zinc-100 transition-all duration-500 ease-in-out ${
-                      location.pathname === "/rekap"
+                      location.pathname === "/rekap-proses"
                         ? "rounded-md bg-zinc-600"
                         : ""
                     }`}>

@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -15,15 +16,18 @@ import Reject from "./pages/produk/Reject";
 import Rekap from "./pages/lab/Rekap";
 import InputLab from "./pages/lab/InputLab";
 import InputProses from "./pages/proses/InputProses";
-
+import RekapProses from "./pages/proses/RekapProses";
 import "./App.css";
-import { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PropTypes from "prop-types";
 
 const ProtectedRoute = ({ children, isAuthenticated }) => {
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  const token = localStorage.getItem("authToken");
+  if (!isAuthenticated && !token) {
+    return <Navigate to="/login" />;
+  }
+  return children;
 };
 
 ProtectedRoute.propTypes = {
@@ -33,22 +37,31 @@ ProtectedRoute.propTypes = {
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // State autentikasi
+  const [loading, setLoading] = useState(true); // State loading
 
   useEffect(() => {
+    // Cek token di localStorage saat aplikasi di-refresh
     const token = localStorage.getItem("authToken");
     if (token) {
-      setIsAuthenticated(true);
+      setIsAuthenticated(true); // Set isAuthenticated berdasarkan token
     }
+    setLoading(false); // Selesai cek token, set loading ke false
   }, []);
+
   const handleLogin = () => {
     setIsAuthenticated(true);
-    localStorage.setItem("authToken", "your_auth_token");
+    localStorage.setItem("authToken", "your_auth_token"); // Simpan token di localStorage
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    localStorage.removeItem("authToken");
+    localStorage.removeItem("authToken"); // Hapus token dari localStorage
   };
+
+  if (loading) {
+    // Render loading atau spinner jika masih loading
+    return <div>Loading...</div>;
+  }
 
   return (
     <Router>
@@ -130,6 +143,14 @@ const App = () => {
                 element={
                   <ProtectedRoute isAuthenticated={isAuthenticated}>
                     <InputProses />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/rekap-proses"
+                element={
+                  <ProtectedRoute isAuthenticated={isAuthenticated}>
+                    <RekapProses />
                   </ProtectedRoute>
                 }
               />

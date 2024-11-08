@@ -8,9 +8,10 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { PiMicrosoftExcelLogoFill } from "react-icons/pi";
 import ModalEditProses from "../modal/edit/ModalEdtProses";
 import ModalDetailProses from "../modal/detail/ModalDetailProses";
-import ModalImportExcelBarangMasuk from "../modal/import excel/ModalImportExcelBarangMasuk";
+import ModalImportExcelProses from "../modal/import excel/ModalImportExcelProses";
 import ModalAddProses from "../modal/add/ModalAddProses";
 import ModalHapusProses from "../modal/hapus/ModalHapusProses";
+import { Tooltip } from "react-tooltip";
 
 const TableInputProses = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -307,18 +308,24 @@ const TableInputProses = () => {
                 <td className="py-3 px-6">
                   <div className="flex items-center justify-center space-x-2">
                     <button
+                      data-tooltip-id="btnTooltip"
+                      data-tooltip-content="Edit"
                       onClick={() => openEditModal(item)}
                       className="text-green-600 hover:text-green-200"
                       aria-label="Edit">
                       <BsPencil className="text-xl" />
                     </button>
                     <button
+                      data-tooltip-id="btnTooltip"
+                      data-tooltip-content="Delete"
                       onClick={() => openDeleteModal(item)}
                       className="text-red-600 hover:text-red-200"
                       aria-label="Delete">
                       <BsTrash className="text-xl" />
                     </button>{" "}
                     <button
+                      data-tooltip-id="btnTooltip"
+                      data-tooltip-content="Detail"
                       onClick={() => openDetailModal(item)}
                       className="text-blue-600 hover:text-blue-200"
                       aria-label="Detail">
@@ -331,6 +338,8 @@ const TableInputProses = () => {
           </tbody>
         </table>
       </div>
+      <Tooltip id="btnTooltip" place="top" type="dark" effect="solid" />
+
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
@@ -363,7 +372,7 @@ const TableInputProses = () => {
           product={selectedDetailProduct}
         />
       )}
-      <ModalImportExcelBarangMasuk
+      <ModalImportExcelProses
         isOpen={importModalOpen}
         onClose={() => setImportModalOpen(false)}
         onImport={handleImportExcel}

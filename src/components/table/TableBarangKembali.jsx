@@ -10,6 +10,7 @@ import ModalEditBarangKembali from "../modal/edit/ModalEditBarangKembali";
 import ModalHapusBarangKembali from "../modal/hapus/ModalHapusBarangKembali";
 import ModalDetailBarangKembali from "../modal/detail/ModalDetailBarangKembali";
 import ModalImportExcelBarangKembali from "../modal/import excel/ModalImportExcelBarangKembali";
+import { Tooltip } from "react-tooltip";
 
 const TableBarangKembali = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -187,18 +188,24 @@ const TableBarangKembali = () => {
               <td className="py-3 px-6">
                 <div className="flex items-center justify-center space-x-2">
                   <button
+                    data-tooltip-id="btnTooltip"
+                    data-tooltip-content="Edit"
                     onClick={() => openEditModal(item)}
                     className="text-green-600 hover:text-green-200"
                     aria-label="Edit">
                     <BsPencil className="text-xl" />
                   </button>
                   <button
+                    data-tooltip-id="btnTooltip"
+                    data-tooltip-content="Delete"
                     onClick={() => openDeleteModal(item)}
                     className="text-red-600 hover:text-red-200"
                     aria-label="Delete">
                     <BsTrash className="text-xl" />
                   </button>
                   <button
+                    data-tooltip-id="btnTooltip"
+                    data-tooltip-content="Detail"
                     onClick={() => openDetailModal(item)}
                     className="text-blue-600 hover:text-blue-200"
                     aria-label="Detail">
@@ -210,6 +217,7 @@ const TableBarangKembali = () => {
           ))}
         </tbody>
       </table>
+      <Tooltip id="btnTooltip" place="top" type="dark" effect="solid" />
 
       {/* Pagination */}
       <Pagination
